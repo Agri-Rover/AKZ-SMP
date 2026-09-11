@@ -1,724 +1,378 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#050505">
 
-    <title>AKZ-SMP | TWO LEGENDS. ONE WORLD.</title>
+    <title>AGRI ROBO | Owner Control</title>
 
-    <link rel="stylesheet" href="./style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #07130a;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* LOGIN */
+
+        #loginPage {
+            width: 100%;
+            max-width: 420px;
+            padding: 25px;
+        }
+
+        .login-box {
+            background: #102216;
+            border: 1px solid #285c32;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 0 40px rgba(0, 255, 80, 0.12);
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 45px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #5cff78;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #9db5a1;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #c9ddcd;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 18px;
+            border: 1px solid #315f39;
+            border-radius: 10px;
+            background: #07130a;
+            color: white;
+            outline: none;
+            font-size: 16px;
+        }
+
+        input:focus {
+            border-color: #5cff78;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #39d353;
+            color: #041006;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .login-btn:hover {
+            background: #5cff78;
+        }
+
+        #error {
+            color: #ff6565;
+            text-align: center;
+            margin-top: 15px;
+            display: none;
+        }
+
+        /* ROVER DASHBOARD */
+
+        #roverPage {
+            display: none;
+            width: 100%;
+            min-height: 100vh;
+            padding: 25px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1100px;
+            margin: auto;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            text-align: left;
+            margin: 0;
+        }
+
+        .logout {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .dashboard {
+            max-width: 1100px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: #102216;
+            border: 1px solid #285c32;
+            border-radius: 18px;
+            padding: 25px;
+        }
+
+        .card h2 {
+            color: #5cff78;
+            margin-bottom: 20px;
+        }
+
+        /* CONTROLS */
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            max-width: 330px;
+            margin: auto;
+        }
+
+        .control-btn {
+            height: 75px;
+            border: none;
+            border-radius: 15px;
+            background: #193b21;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+
+        .control-btn:hover {
+            background: #285f33;
+            transform: scale(1.04);
+        }
+
+        .stop {
+            background: #b52b2b;
+        }
+
+        .stop:hover {
+            background: #e33b3b;
+        }
+
+        .empty {
+            visibility: hidden;
+        }
+
+        .status {
+            margin-top: 25px;
+            text-align: center;
+            padding: 12px;
+            background: #07130a;
+            border-radius: 10px;
+            color: #5cff78;
+        }
+
+        .online {
+            color: #5cff78;
+        }
+
+        @media(max-width: 750px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- =====================================================
-     NAVIGATION
-===================================================== -->
+    <!-- LOGIN PAGE -->
 
-<header id="header">
+    <div id="loginPage">
 
-    <div class="nav-container">
+        <div class="login-box">
 
-        <a href="#home" class="logo">
-            AKZ<span>-SMP</span>
-        </a>
+            <div class="logo">🤖🌱</div>
 
-        <button class="menu-toggle" aria-label="Open menu">
-            ☰
-        </button>
+            <h1>AGRI ROBO</h1>
 
-        <nav class="nav-links">
+            <p class="subtitle">
+                Owner Control System
+            </p>
 
-            <a href="#about">ABOUT</a>
-            <a href="#legends">LEGENDS</a>
-            <a href="#relvo">RELVO</a>
-            <a href="#armory">ARMORY</a>
-            <a href="#academy">ACADEMY</a>
-            <a href="#story">STORY</a>
+            <form onsubmit="login(event)">
 
-        </nav>
+                <label>Username</label>
 
-    </div>
+                <input
+                    type="text"
+                    id="username"
+                    placeholder="Enter username"
+                    required
+                >
 
-</header>
+                <label>Password</label>
 
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter password"
+                    required
+                >
 
-<!-- =====================================================
-     HERO
-===================================================== -->
+                <button class="login-btn" type="submit">
+                    🔐 LOGIN
+                </button>
 
-<section id="home" class="hero">
+            </form>
 
-    <div class="hero-background"></div>
-    <div class="hero-overlay"></div>
-    <div class="particles"></div>
-
-    <div class="hero-content">
-
-        <div class="hero-small">
-            A MINECRAFT SURVIVAL STORY
-        </div>
-
-        <h1>
-            AKZ<span>-SMP</span>
-        </h1>
-
-        <p>
-            TWO LEGENDS. ONE WORLD.
-        </p>
-
-        <a href="#legends" class="btn">
-            ENTER THE WORLD
-        </a>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     ABOUT
-===================================================== -->
-
-<section id="about" class="section">
-
-    <div class="section-container">
-
-        <div class="section-label">
-            01 — ABOUT
-        </div>
-
-        <h2>
-            ONE WORLD.<br>
-            <span>TWO LEGENDS.</span>
-        </h2>
-
-        <p class="large-text">
-            AKZ-SMP is the story of two players who chose
-            completely different paths.
-        </p>
-
-        <div class="about-grid">
-
-            <div>
-                <p>
-                    <strong>RELVO</strong> became a warrior.
-                    A mace master, PvP expert and survival
-                    specialist capable of dominating the
-                    battlefield.
-                </p>
-            </div>
-
-            <div>
-                <p>
-                    <strong>AKZZZ</strong> became a builder.
-                    A legendary architect whose greatest
-                    creation would become one of the most
-                    important locations in the world.
-                </p>
-            </div>
+            <p id="error">
+                Invalid username or password
+            </p>
 
         </div>
 
     </div>
 
-</section>
 
+    <!-- ROVER CONTROL PAGE -->
 
-<!-- =====================================================
-     TWO LEGENDS
-===================================================== -->
+    <div id="roverPage">
 
-<section id="legends" class="section dark">
+        <div class="header">
 
-    <div class="section-container">
+            <h1>🤖 AGRI ROBO</h1>
 
-        <div class="section-label">
-            02 — THE TWO LEGENDS
+            <button class="logout" onclick="logout()">
+                Logout
+            </button>
+
         </div>
 
-        <h2>
-            THE<br>
-            <span>LEGENDS.</span>
-        </h2>
 
-        <div class="character-grid">
+        <div class="dashboard">
 
-            <!-- RELVO -->
+            <!-- MOVEMENT -->
 
-            <article class="character-card"
-                     data-character="relvo">
+            <div class="card">
 
-                <div class="character-image">
+                <h2>🚜 Rover Control</h2>
 
-                    <img
-                        src="./images/relvo.png"
-                        alt="RELVO - The Mace Master"
-                        loading="lazy"
+                <div class="controls">
+
+                    <button class="control-btn empty"></button>
+
+                    <button
+                        class="control-btn"
+                        onclick="move('forward')"
                     >
+                        ▲
+                    </button>
 
-                    <div class="image-fallback">
-                        RELVO
-                    </div>
-
-                </div>
-
-                <div class="character-info">
-
-                    <div class="character-number">
-                        01
-                    </div>
-
-                    <h3>RELVO</h3>
-
-                    <h4>THE MACE MASTER</h4>
-
-                    <p>
-                        Mace Expert • PvP Expert •
-                        Survival Specialist
-                    </p>
-
-                </div>
-
-            </article>
+                    <button class="control-btn empty"></button>
 
 
-            <!-- AKZZZ -->
-
-            <article class="character-card"
-                     data-character="akzzz">
-
-                <div class="character-image">
-
-                    <img
-                        src="./images/akzzz.png"
-                        alt="AKZZZ - The Legendary Builder"
-                        loading="lazy"
+                    <button
+                        class="control-btn"
+                        onclick="move('left')"
                     >
+                        ◀
+                    </button>
 
-                    <div class="image-fallback">
-                        AKZZZ
-                    </div>
+                    <button
+                        class="control-btn stop"
+                        onclick="move('stop')"
+                    >
+                        ■
+                    </button>
+
+                    <button
+                        class="control-btn"
+                        onclick="move('right')"
+                    >
+                        ▶
+                    </button>
+
+
+                    <button class="control-btn empty"></button>
+
+                    <button
+                        class="control-btn"
+                        onclick="move('backward')"
+                    >
+                        ▼
+                    </button>
+
+                    <button class="control-btn empty"></button>
 
                 </div>
 
-                <div class="character-info">
-
-                    <div class="character-number">
-                        02
-                    </div>
-
-                    <h3>AKZZZ</h3>
-
-                    <h4>THE LEGENDARY BUILDER</h4>
-
-                    <p>
-                        Legendary Builder • Master Architect •
-                        World Creator
-                    </p>
-
-                </div>
-
-            </article>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     RELVO
-===================================================== -->
-
-<section id="relvo" class="relvo-section">
-
-    <div class="relvo-bg"></div>
-    <div class="relvo-overlay"></div>
-
-    <div class="relvo-content">
-
-        <div class="section-label">
-            03 — THE WARRIOR
-        </div>
-
-        <h2>
-            RELVO
-        </h2>
-
-        <h3>
-            THE MACE MASTER
-        </h3>
-
-        <p>
-            MACE EXPERT • PVP EXPERT •
-            SURVIVAL SPECIALIST
-        </p>
-
-        <blockquote>
-            "When the battle begins, Relvo doesn't run."
-        </blockquote>
-
-        <button class="btn mace-trigger">
-            UNLEASH THE MACE
-        </button>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     MACE
-===================================================== -->
-
-<section class="mace-section">
-
-    <div class="mace-image">
-
-        <img
-            src="./images/relvo-mace.png"
-            alt="Relvo holding the Minecraft mace"
-            loading="lazy"
-        >
-
-    </div>
-
-    <div class="mace-overlay"></div>
-
-    <div class="mace-content">
-
-        <div class="section-label">
-            SIGNATURE WEAPON
-        </div>
-
-        <h2>
-            THE<br>
-            <span>MACE</span>
-        </h2>
-
-        <p>
-            One impact can change everything.
-        </p>
-
-        <button class="btn mace-trigger">
-            STRIKE
-        </button>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     ARMORY
-===================================================== -->
-
-<section id="armory" class="section dark">
-
-    <div class="section-container">
-
-        <div class="section-label">
-            04 — RELVO'S ARMORY
-        </div>
-
-        <h2>
-            THE<br>
-            <span>ARSENAL.</span>
-        </h2>
-
-
-        <!-- ARMOR -->
-
-        <h3 class="subheading">
-            NETHERITE ARMOR
-        </h3>
-
-        <div class="equipment-grid">
-
-            <div class="equipment-card">
-
-                <img
-                    src="./images/netherite-helmet.png"
-                    alt="Netherite Helmet"
-                >
-
-                <h4>HELMET</h4>
-
-                <p>
-                    Protection<br>
-                    Unbreaking<br>
-                    Mending<br>
-                    Respiration<br>
-                    Aqua Affinity
-                </p>
-
-                <small>NETHERITE TRIM</small>
-
-            </div>
-
-
-            <div class="equipment-card">
-
-                <img
-                    src="./images/netherite-chestplate.png"
-                    alt="Netherite Chestplate"
-                >
-
-                <h4>CHESTPLATE</h4>
-
-                <p>
-                    Protection<br>
-                    Unbreaking<br>
-                    Mending<br>
-                    Thorns
-                </p>
-
-                <small>NETHERITE TRIM</small>
-
-            </div>
-
-
-            <div class="equipment-card">
-
-                <img
-                    src="./images/netherite-leggings.png"
-                    alt="Netherite Leggings"
-                >
-
-                <h4>LEGGINGS</h4>
-
-                <p>
-                    Protection<br>
-                    Unbreaking<br>
-                    Mending<br>
-                    Swift Sneak
-                </p>
-
-                <small>NETHERITE TRIM</small>
-
-            </div>
-
-
-            <div class="equipment-card">
-
-                <img
-                    src="./images/netherite-boots.png"
-                    alt="Netherite Boots"
-                >
-
-                <h4>BOOTS</h4>
-
-                <p>
-                    Protection<br>
-                    Unbreaking<br>
-                    Mending<br>
-                    Feather Falling<br>
-                    Depth Strider
-                </p>
-
-                <small>NETHERITE TRIM</small>
-
-            </div>
-
-        </div>
-
-
-        <!-- WEAPONS -->
-
-        <h3 class="subheading">
-            WEAPONS
-        </h3>
-
-        <div class="equipment-grid weapons">
-
-            <div class="equipment-card weapon">
-
-                <img
-                    src="./images/mace.png"
-                    alt="Netherite Mace"
-                >
-
-                <h4>THE MACE</h4>
-
-                <p>
-                    Density<br>
-                    Unbreaking<br>
-                    Mending<br>
-                    Wind Burst
-                </p>
-
-            </div>
-
-
-            <div class="equipment-card weapon">
-
-                <img
-                    src="./images/netherite-sword.png"
-                    alt="Netherite Sword"
-                >
-
-                <h4>NETHERITE SWORD</h4>
-
-                <p>
-                    Sharpness IV<br>
-                    Unbreaking<br>
-                    Mending<br>
-                    Sweeping Edge<br>
-                    Looting<br>
-                    Fire Aspect
-                </p>
-
-            </div>
-
-
-            <div class="equipment-card weapon">
-
-                <img
-                    src="./images/netherite-axe.png"
-                    alt="Netherite Axe"
-                >
-
-                <h4>NETHERITE AXE</h4>
-
-                <p>
-                    Sharpness<br>
-                    Efficiency<br>
-                    Unbreaking<br>
-                    Mending
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <!-- TOOLS -->
-
-        <h3 class="subheading">
-            TOOLS
-        </h3>
-
-        <div class="equipment-grid">
-
-            <div class="equipment-card">
-
-                <img
-                    src="./images/netherite-pickaxe.png"
-                    alt="Netherite Pickaxe"
-                >
-
-                <h4>PICKAXE</h4>
-
-                <p>
-                    Efficiency<br>
-                    Fortune<br>
-                    Unbreaking<br>
-                    Mending
-                </p>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     AKZ ACADEMY
-===================================================== -->
-
-<section id="academy" class="academy-section">
-
-    <div class="academy-image">
-
-        <img
-            src="./images/akz-academy.jpg"
-            alt="AKZ Academy built by AKZZZ"
-            loading="lazy"
-        >
-
-    </div>
-
-    <div class="academy-overlay"></div>
-
-    <div class="academy-content">
-
-        <div class="section-label">
-            05 — THE BUILDER
-        </div>
-
-        <h2>
-            THE AKZ<br>
-            <span>ACADEMY</span>
-        </h2>
-
-        <p>BUILT BY AKZZZ.</p>
-
-        <p>REMEMBERED BY THE WORLD.</p>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     ACADEMY GALLERY
-===================================================== -->
-
-<section class="section">
-
-    <div class="section-container">
-
-        <div class="section-label">
-            THE CREATION
-        </div>
-
-        <h2>
-            BUILT FROM<br>
-            <span>NOTHING.</span>
-        </h2>
-
-        <div class="gallery">
-
-            <img
-                src="./images/academy-1.jpg"
-                alt="AKZ Academy exterior"
-            >
-
-            <img
-                src="./images/academy-2.jpg"
-                alt="AKZ Academy entrance"
-            >
-
-            <img
-                src="./images/academy-3.jpg"
-                alt="AKZ Academy interior"
-            >
-
-            <img
-                src="./images/academy-4.jpg"
-                alt="AKZ Academy at night"
-            >
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     CONTRAST
-===================================================== -->
-
-<section class="contrast-section">
-
-    <div class="contrast-card warrior">
-
-        <span>THE WARRIOR</span>
-
-        <h2>RELVO</h2>
-
-        <p>
-            POWER COMES FROM COMBAT.
-        </p>
-
-    </div>
-
-
-    <div class="contrast-card builder">
-
-        <span>THE BUILDER</span>
-
-        <h2>AKZZZ</h2>
-
-        <p>
-            POWER COMES FROM CREATION.
-        </p>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     STORY
-===================================================== -->
-
-<section id="story" class="section dark">
-
-    <div class="section-container">
-
-        <div class="section-label">
-            06 — THE STORY
-        </div>
-
-        <h2>
-            TWO PATHS.<br>
-            <span>ONE WORLD.</span>
-        </h2>
-
-        <div class="story">
-
-            <div class="story-item">
-
-                <span>01</span>
-
-                <div>
-
-                    <h3>THE BUILDER</h3>
-
-                    <p>
-                        AKZZZ enters the world and begins
-                        creating. His greatest creation
-                        becomes the AKZ Academy.
-                    </p>
-
+                <div class="status" id="status">
+                    Rover stopped
                 </div>
 
             </div>
 
 
-            <div class="story-item">
+            <!-- SYSTEM STATUS -->
 
-                <span>02</span>
+            <div class="card">
 
-                <div>
+                <h2>📡 System Status</h2>
 
-                    <h3>THE WARRIOR</h3>
+                <p>
+                    Rover:
+                    <span class="online">● Online</span>
+                </p>
 
-                    <p>
-                        RELVO masters survival and combat,
-                        becoming a terrifying PvP fighter
-                        and mace expert.
-                    </p>
+                <br>
 
-                </div>
+                <p>
+                    Connection:
+                    <span class="online">● Connected</span>
+                </p>
 
-            </div>
+                <br>
 
+                <p>
+                    Control:
+                    <span class="online">● Owner Only</span>
+                </p>
 
-            <div class="story-item">
+                <br>
 
-                <span>03</span>
-
-                <div>
-
-                    <h3>THE TWO</h3>
-
-                    <p>
-                        One creates.
-                        One conquers.
-                        Together, they define AKZ-SMP.
-                    </p>
-
-                </div>
+                <p>
+                    Battery: <span id="battery">--%</span>
+                </p>
 
             </div>
 
@@ -726,89 +380,109 @@
 
     </div>
 
-</section>
+
+    <script>
+
+        /*
+         * DEMO LOGIN
+         *
+         * CHANGE THESE
+         */
+
+        const OWNER_USERNAME = "owner";
+        const OWNER_PASSWORD = "agri123";
 
 
-<!-- =====================================================
-     FINAL
-===================================================== -->
+        function login(event) {
 
-<section class="final-section">
+            event.preventDefault();
 
-    <div class="final-image">
+            const username =
+                document.getElementById("username").value;
 
-        <img
-            src="./images/final-akz-smp.jpg"
-            alt="AKZZZ and Relvo together"
-        >
-
-    </div>
-
-    <div class="final-overlay"></div>
-
-    <div class="final-content">
-
-        <div class="final-names">
-
-            <span>AKZZZ</span>
-
-            <b>×</b>
-
-            <span>RELVO</span>
-
-        </div>
-
-        <h2>AKZ-SMP</h2>
-
-        <p>TWO LEGENDS. ONE WORLD.</p>
-
-        <small>
-            THE STORY HAS ONLY JUST BEGUN.
-        </small>
-
-    </div>
-
-</section>
+            const password =
+                document.getElementById("password").value;
 
 
-<!-- =====================================================
-     FOOTER
-===================================================== -->
+            if (
+                username === OWNER_USERNAME &&
+                password === OWNER_PASSWORD
+            ) {
 
-<footer>
+                document.getElementById("loginPage").style.display =
+                    "none";
 
-    <div>AKZ-SMP</div>
+                document.getElementById("roverPage").style.display =
+                    "block";
 
-    <p>
-        TWO LEGENDS. ONE WORLD.
-    </p>
+                document.getElementById("error").style.display =
+                    "none";
 
-</footer>
+            } else {
 
-
-<!-- =====================================================
-     MODAL
-===================================================== -->
-
-<div id="character-modal">
-
-    <div class="modal-box">
-
-        <button class="modal-close">
-            ×
-        </button>
-
-        <h2 id="modal-title"></h2>
-
-        <div id="modal-content"></div>
-
-    </div>
-
-</div>
+                document.getElementById("error").style.display =
+                    "block";
+            }
+        }
 
 
-<script src="./script.js"></script>
+        function logout() {
+
+            document.getElementById("roverPage").style.display =
+                "none";
+
+            document.getElementById("loginPage").style.display =
+                "block";
+
+            document.getElementById("username").value = "";
+            document.getElementById("password").value = "";
+        }
+
+
+        /*
+         * ROVER COMMAND
+         *
+         * Later we will connect these commands
+         * to your ESP32.
+         */
+
+        function move(direction) {
+
+            const status =
+                document.getElementById("status");
+
+            if (direction === "forward") {
+                status.innerText = "⬆ Moving Forward";
+            }
+
+            else if (direction === "backward") {
+                status.innerText = "⬇ Moving Backward";
+            }
+
+            else if (direction === "left") {
+                status.innerText = "⬅ Turning Left";
+            }
+
+            else if (direction === "right") {
+                status.innerText = "➡ Turning Right";
+            }
+
+            else if (direction === "stop") {
+                status.innerText = "⛔ Rover Stopped";
+            }
+
+
+            /*
+             * ESP32 COMMAND WILL GO HERE
+             *
+             * Example later:
+             *
+             * fetch("http://ESP32-IP/" + direction);
+             *
+             */
+        }
+
+    </script>
 
 </body>
 </html>
-```
