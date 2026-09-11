@@ -1,401 +1,178 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>AGRI ROBO | Owner Control</title>
+    <title>AGRI ROBO</title>
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
         body {
-            min-height: 100vh;
+            margin: 0;
             background: #07130a;
             color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-family: Arial, sans-serif;
+            text-align: center;
         }
 
-        /* LOGIN */
-
-        #loginPage {
-            width: 100%;
-            max-width: 420px;
-            padding: 25px;
-        }
-
-        .login-box {
+        .box {
+            width: 320px;
+            margin: 100px auto;
+            padding: 30px;
             background: #102216;
-            border: 1px solid #285c32;
             border-radius: 20px;
-            padding: 35px;
-            box-shadow: 0 0 40px rgba(0, 255, 80, 0.12);
-        }
-
-        .logo {
-            text-align: center;
-            font-size: 45px;
-            margin-bottom: 10px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #5cff78;
-            margin-bottom: 8px;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #9db5a1;
-            margin-bottom: 30px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #c9ddcd;
         }
 
         input {
-            width: 100%;
-            padding: 14px;
-            margin-bottom: 18px;
-            border: 1px solid #315f39;
-            border-radius: 10px;
-            background: #07130a;
-            color: white;
-            outline: none;
-            font-size: 16px;
-        }
-
-        input:focus {
-            border-color: #5cff78;
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 14px;
+            width: 90%;
+            padding: 12px;
+            margin: 10px;
+            border-radius: 8px;
             border: none;
-            border-radius: 10px;
-            background: #39d353;
-            color: #041006;
-            font-size: 17px;
-            font-weight: bold;
-            cursor: pointer;
         }
 
-        .login-btn:hover {
-            background: #5cff78;
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .login {
+            background: #39d353;
         }
 
         #error {
-            color: #ff6565;
-            text-align: center;
-            margin-top: 15px;
+            color: red;
             display: none;
         }
-
-        /* ROVER DASHBOARD */
 
         #roverPage {
             display: none;
-            width: 100%;
-            min-height: 100vh;
-            padding: 25px;
         }
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1100px;
-            margin: auto;
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            text-align: left;
-            margin: 0;
-        }
-
-        .logout {
-            background: #ff4444;
-            color: white;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .dashboard {
-            max-width: 1100px;
-            margin: auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .card {
-            background: #102216;
-            border: 1px solid #285c32;
-            border-radius: 18px;
-            padding: 25px;
-        }
-
-        .card h2 {
-            color: #5cff78;
-            margin-bottom: 20px;
-        }
-
-        /* CONTROLS */
-
-        .controls {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            max-width: 330px;
-            margin: auto;
-        }
-
-        .control-btn {
-            height: 75px;
-            border: none;
-            border-radius: 15px;
+        .control {
+            font-size: 30px;
+            margin: 8px;
+            width: 80px;
+            height: 70px;
             background: #193b21;
             color: white;
-            font-size: 28px;
-            cursor: pointer;
-            transition: 0.15s;
-        }
-
-        .control-btn:hover {
-            background: #285f33;
-            transform: scale(1.04);
         }
 
         .stop {
-            background: #b52b2b;
-        }
-
-        .stop:hover {
-            background: #e33b3b;
-        }
-
-        .empty {
-            visibility: hidden;
-        }
-
-        .status {
-            margin-top: 25px;
-            text-align: center;
-            padding: 12px;
-            background: #07130a;
-            border-radius: 10px;
-            color: #5cff78;
-        }
-
-        .online {
-            color: #5cff78;
-        }
-
-        @media(max-width: 750px) {
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
+            background: red;
         }
     </style>
 </head>
 
 <body>
 
-    <!-- LOGIN PAGE -->
+    <!-- LOGIN -->
 
-    <div id="loginPage">
+    <div id="loginPage" class="box">
 
-        <div class="login-box">
+        <h1>🌱 AGRI ROBO 🤖</h1>
 
-            <div class="logo">🤖🌱</div>
+        <h3>Owner Login</h3>
 
-            <h1>AGRI ROBO</h1>
+        <input
+            type="text"
+            id="username"
+            placeholder="Username"
+        >
 
-            <p class="subtitle">
-                Owner Control System
-            </p>
+        <br>
 
-            <form onsubmit="login(event)">
+        <input
+            type="password"
+            id="password"
+            placeholder="Password"
+        >
 
-                <label>Username</label>
+        <br><br>
 
-                <input
-                    type="text"
-                    id="username"
-                    placeholder="Enter username"
-                    required
-                >
+        <button class="login" onclick="login()">
+            LOGIN
+        </button>
 
-                <label>Password</label>
-
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Enter password"
-                    required
-                >
-
-                <button class="login-btn" type="submit">
-                    🔐 LOGIN
-                </button>
-
-            </form>
-
-            <p id="error">
-                Invalid username or password
-            </p>
-
-        </div>
+        <p id="error">
+            ❌ Wrong username or password
+        </p>
 
     </div>
 
 
-    <!-- ROVER CONTROL PAGE -->
+    <!-- ROVER CONTROL -->
 
     <div id="roverPage">
 
-        <div class="header">
+        <h1>🤖 AGRI ROBO</h1>
 
-            <h1>🤖 AGRI ROBO</h1>
+        <h2>Owner Control Panel</h2>
 
-            <button class="logout" onclick="logout()">
-                Logout
-            </button>
+        <p id="status">
+            Rover stopped
+        </p>
 
-        </div>
+        <br>
 
+        <button
+            class="control"
+            onclick="move('forward')">
+            ▲
+        </button>
 
-        <div class="dashboard">
+        <br>
 
-            <!-- MOVEMENT -->
+        <button
+            class="control"
+            onclick="move('left')">
+            ◀
+        </button>
 
-            <div class="card">
+        <button
+            class="control stop"
+            onclick="move('stop')">
+            ■
+        </button>
 
-                <h2>🚜 Rover Control</h2>
+        <button
+            class="control"
+            onclick="move('right')">
+            ▶
+        </button>
 
-                <div class="controls">
+        <br>
 
-                    <button class="control-btn empty"></button>
+        <button
+            class="control"
+            onclick="move('backward')">
+            ▼
+        </button>
 
-                    <button
-                        class="control-btn"
-                        onclick="move('forward')"
-                    >
-                        ▲
-                    </button>
+        <br><br>
 
-                    <button class="control-btn empty"></button>
-
-
-                    <button
-                        class="control-btn"
-                        onclick="move('left')"
-                    >
-                        ◀
-                    </button>
-
-                    <button
-                        class="control-btn stop"
-                        onclick="move('stop')"
-                    >
-                        ■
-                    </button>
-
-                    <button
-                        class="control-btn"
-                        onclick="move('right')"
-                    >
-                        ▶
-                    </button>
-
-
-                    <button class="control-btn empty"></button>
-
-                    <button
-                        class="control-btn"
-                        onclick="move('backward')"
-                    >
-                        ▼
-                    </button>
-
-                    <button class="control-btn empty"></button>
-
-                </div>
-
-                <div class="status" id="status">
-                    Rover stopped
-                </div>
-
-            </div>
-
-
-            <!-- SYSTEM STATUS -->
-
-            <div class="card">
-
-                <h2>📡 System Status</h2>
-
-                <p>
-                    Rover:
-                    <span class="online">● Online</span>
-                </p>
-
-                <br>
-
-                <p>
-                    Connection:
-                    <span class="online">● Connected</span>
-                </p>
-
-                <br>
-
-                <p>
-                    Control:
-                    <span class="online">● Owner Only</span>
-                </p>
-
-                <br>
-
-                <p>
-                    Battery: <span id="battery">--%</span>
-                </p>
-
-            </div>
-
-        </div>
+        <button onclick="logout()">
+            LOGOUT
+        </button>
 
     </div>
 
 
     <script>
 
-        /*
-         * DEMO LOGIN
-         *
-         * CHANGE THESE
-         */
+        // =========================
+        // YOUR LOGIN DETAILS
+        // =========================
 
-        const OWNER_USERNAME = "1234";
-        const OWNER_PASSWORD = "1234";
+        const USERNAME = "owner";
+        const PASSWORD = "agri123";
 
 
-        function login(event) {
+        // =========================
+        // LOGIN
+        // =========================
 
-            event.preventDefault();
+        function login() {
 
             const username =
                 document.getElementById("username").value;
@@ -405,81 +182,58 @@
 
 
             if (
-                username === OWNER_USERNAME &&
-                password === OWNER_PASSWORD
+                username === USERNAME &&
+                password === PASSWORD
             ) {
 
-                document.getElementById("loginPage").style.display =
-                    "none";
+                document.getElementById("loginPage")
+                    .style.display = "none";
 
-                document.getElementById("roverPage").style.display =
-                    "block";
+                document.getElementById("roverPage")
+                    .style.display = "block";
 
-                document.getElementById("error").style.display =
-                    "none";
+                document.getElementById("error")
+                    .style.display = "none";
 
             } else {
 
-                document.getElementById("error").style.display =
-                    "block";
+                document.getElementById("error")
+                    .style.display = "block";
             }
         }
 
 
-        function logout() {
-
-            document.getElementById("roverPage").style.display =
-                "none";
-
-            document.getElementById("loginPage").style.display =
-                "block";
-
-            document.getElementById("username").value = "";
-            document.getElementById("password").value = "";
-        }
-
-
-        /*
-         * ROVER COMMAND
-         *
-         * Later we will connect these commands
-         * to your ESP32.
-         */
+        // =========================
+        // ROVER CONTROL
+        // =========================
 
         function move(direction) {
 
-            const status =
-                document.getElementById("status");
+            document.getElementById("status")
+                .innerText =
+                "Rover: " + direction.toUpperCase();
 
-            if (direction === "forward") {
-                status.innerText = "⬆ Moving Forward";
-            }
-
-            else if (direction === "backward") {
-                status.innerText = "⬇ Moving Backward";
-            }
-
-            else if (direction === "left") {
-                status.innerText = "⬅ Turning Left";
-            }
-
-            else if (direction === "right") {
-                status.innerText = "➡ Turning Right";
-            }
-
-            else if (direction === "stop") {
-                status.innerText = "⛔ Rover Stopped";
-            }
+            console.log("Command:", direction);
+        }
 
 
-            /*
-             * ESP32 COMMAND WILL GO HERE
-             *
-             * Example later:
-             *
-             * fetch("http://ESP32-IP/" + direction);
-             *
-             */
+        // =========================
+        // LOGOUT
+        // =========================
+
+        function logout() {
+
+            document.getElementById("roverPage")
+                .style.display = "none";
+
+            document.getElementById("loginPage")
+                .style.display = "block";
+
+            document.getElementById("username")
+                .value = "";
+
+            document.getElementById("password")
+                .value = "";
         }
 
     </script>
