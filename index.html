@@ -1,242 +1,1352 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>AGRI ROBO</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        body {
-            margin: 0;
-            background: #07130a;
-            color: white;
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
+<title>AGRI ROBO | Rover Control</title>
 
-        .box {
-            width: 320px;
-            margin: 100px auto;
-            padding: 30px;
-            background: #102216;
-            border-radius: 20px;
-        }
+<style>
 
-        input {
-            width: 90%;
-            padding: 12px;
-            margin: 10px;
-            border-radius: 8px;
-            border: none;
-        }
+/* =========================
+   GLOBAL
+========================= */
 
-        button {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-        }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-        .login {
-            background: #39d353;
-        }
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(circle at top left, #12351d 0%, transparent 35%),
+        radial-gradient(circle at bottom right, #0d3018 0%, transparent 35%),
+        #050b07;
 
-        #error {
-            color: red;
-            display: none;
-        }
+    color: white;
+    min-height: 100vh;
+}
 
-        #roverPage {
-            display: none;
-        }
 
-        .control {
-            font-size: 30px;
-            margin: 8px;
-            width: 80px;
-            height: 70px;
-            background: #193b21;
-            color: white;
-        }
+/* =========================
+   LOGIN
+========================= */
 
-        .stop {
-            background: red;
-        }
-    </style>
+#loginPage {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 430px;
+
+    padding: 40px 32px;
+
+    background: rgba(15, 31, 20, 0.92);
+
+    border: 1px solid rgba(74, 222, 128, 0.25);
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 0 50px rgba(34, 197, 94, 0.12);
+
+    backdrop-filter: blur(15px);
+
+    animation: appear 0.7s ease;
+}
+
+@keyframes appear {
+
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.logo {
+    width: 90px;
+    height: 90px;
+
+    margin: auto;
+    margin-bottom: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 25px;
+
+    background: linear-gradient(
+        135deg,
+        #22c55e,
+        #15803d
+    );
+
+    font-size: 45px;
+
+    box-shadow:
+        0 0 35px rgba(34, 197, 94, 0.4);
+}
+
+
+.login-card h1 {
+    text-align: center;
+
+    font-size: 32px;
+
+    color: #4ade80;
+
+    letter-spacing: 2px;
+}
+
+
+.subtitle {
+    text-align: center;
+
+    color: #94a3b8;
+
+    margin-top: 8px;
+    margin-bottom: 30px;
+}
+
+
+.input-group {
+    margin-bottom: 18px;
+}
+
+
+.input-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #cbd5e1;
+
+    font-size: 14px;
+}
+
+
+.input-group input {
+
+    width: 100%;
+
+    padding: 15px;
+
+    border-radius: 12px;
+
+    border: 1px solid #244c30;
+
+    outline: none;
+
+    background: #07130a;
+
+    color: white;
+
+    font-size: 16px;
+
+    transition: 0.2s;
+}
+
+
+.input-group input:focus {
+
+    border-color: #4ade80;
+
+    box-shadow:
+        0 0 15px rgba(74, 222, 128, 0.15);
+}
+
+
+.login-btn {
+
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: linear-gradient(
+        135deg,
+        #22c55e,
+        #16a34a
+    );
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.login-btn:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 25px rgba(34, 197, 94, 0.25);
+}
+
+
+#error {
+
+    display: none;
+
+    text-align: center;
+
+    color: #f87171;
+
+    margin-top: 15px;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+#roverPage {
+
+    display: none;
+
+    min-height: 100vh;
+
+    padding: 20px;
+}
+
+
+.container {
+
+    max-width: 1200px;
+
+    margin: auto;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 25px;
+
+    padding: 18px 22px;
+
+    background: rgba(15, 31, 20, 0.9);
+
+    border: 1px solid #1f4329;
+
+    border-radius: 18px;
+}
+
+
+.brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+}
+
+
+.brand-icon {
+
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    background: #166534;
+
+    border-radius: 14px;
+
+    font-size: 25px;
+}
+
+
+.brand h1 {
+
+    font-size: 22px;
+
+    color: #4ade80;
+
+    letter-spacing: 1px;
+}
+
+
+.brand p {
+
+    color: #64748b;
+
+    font-size: 12px;
+
+    margin-top: 3px;
+}
+
+
+.logout {
+
+    border: none;
+
+    background: #3f1717;
+
+    color: #fca5a5;
+
+    padding: 10px 16px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}
+
+
+.logout:hover {
+
+    background: #7f1d1d;
+
+    color: white;
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+.status-row {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+}
+
+
+.status-card {
+
+    padding: 18px;
+
+    background: rgba(15, 31, 20, 0.9);
+
+    border: 1px solid #1f4329;
+
+    border-radius: 16px;
+}
+
+
+.status-title {
+
+    color: #64748b;
+
+    font-size: 12px;
+
+    text-transform: uppercase;
+
+    margin-bottom: 8px;
+}
+
+
+.status-value {
+
+    font-size: 18px;
+
+    font-weight: bold;
+}
+
+
+.online {
+
+    color: #4ade80;
+}
+
+
+.battery {
+
+    color: #60a5fa;
+}
+
+
+/* =========================
+   MAIN GRID
+========================= */
+
+.main-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        1.3fr
+        0.7fr;
+
+    gap: 20px;
+}
+
+
+.card {
+
+    background: rgba(15, 31, 20, 0.9);
+
+    border: 1px solid #1f4329;
+
+    border-radius: 20px;
+
+    padding: 25px;
+}
+
+
+.card-title {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+
+.card-title h2 {
+
+    font-size: 19px;
+
+    color: #e2e8f0;
+}
+
+
+.card-title span {
+
+    color: #4ade80;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   JOYSTICK
+========================= */
+
+.joystick {
+
+    width: 330px;
+
+    max-width: 100%;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 12px;
+}
+
+
+.control {
+
+    aspect-ratio: 1 / 1;
+
+    border: 1px solid #285c36;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #183a21,
+            #0c2012
+        );
+
+    color: #d1fae5;
+
+    font-size: 30px;
+
+    cursor: pointer;
+
+    user-select: none;
+
+    -webkit-user-select: none;
+
+    touch-action: none;
+
+    transition:
+        transform 0.08s,
+        background 0.08s,
+        box-shadow 0.08s;
+}
+
+
+.control:hover {
+
+    border-color: #4ade80;
+
+    background: #1b4d28;
+}
+
+
+.control:active,
+.control.active {
+
+    transform: scale(0.94);
+
+    background: #15803d;
+
+    color: white;
+
+    box-shadow:
+        0 0 25px rgba(34, 197, 94, 0.4);
+}
+
+
+.stop {
+
+    background:
+        linear-gradient(
+            145deg,
+            #7f1d1d,
+            #450a0a
+        );
+
+    border-color: #991b1b;
+
+    color: #fecaca;
+}
+
+
+.stop:hover {
+
+    background: #991b1b;
+
+    border-color: #ef4444;
+}
+
+
+/* =========================
+   CURRENT COMMAND
+========================= */
+
+.command-box {
+
+    margin-top: 25px;
+
+    padding: 15px;
+
+    text-align: center;
+
+    background: #07130a;
+
+    border-radius: 12px;
+
+    border: 1px solid #183c23;
+}
+
+
+.command-label {
+
+    font-size: 11px;
+
+    color: #64748b;
+
+    text-transform: uppercase;
+}
+
+
+#status {
+
+    margin-top: 5px;
+
+    color: #4ade80;
+
+    font-weight: bold;
+
+    font-size: 17px;
+}
+
+
+/* =========================
+   INFO
+========================= */
+
+.info-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 15px 0;
+
+    border-bottom: 1px solid #19321f;
+}
+
+
+.info-row:last-child {
+
+    border-bottom: none;
+}
+
+
+.info-name {
+
+    color: #94a3b8;
+}
+
+
+.info-value {
+
+    color: white;
+
+    font-weight: bold;
+}
+
+
+.progress {
+
+    height: 8px;
+
+    background: #0b1d10;
+
+    border-radius: 20px;
+
+    margin-top: 8px;
+
+    overflow: hidden;
+}
+
+
+.progress-bar {
+
+    height: 100%;
+
+    width: 85%;
+
+    background: #22c55e;
+
+    border-radius: 20px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 800px) {
+
+    .main-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+    .status-row {
+
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    #roverPage {
+
+        padding: 10px;
+    }
+
+    .header {
+
+        padding: 14px;
+    }
+
+    .brand h1 {
+
+        font-size: 18px;
+    }
+
+    .card {
+
+        padding: 18px;
+    }
+
+    .joystick {
+
+        gap: 8px;
+    }
+
+    .control {
+
+        border-radius: 14px;
+
+        font-size: 25px;
+    }
+
+}
+
+</style>
 </head>
+
 
 <body>
 
-    <!-- LOGIN -->
 
-    <div id="loginPage" class="box">
+<!-- =====================================
+     LOGIN PAGE
+===================================== -->
 
-        <h1>🌱 AGRI ROBO 🤖</h1>
+<div id="loginPage">
 
-        <h3>Owner Login</h3>
+    <div class="login-card">
 
-        <input
-            type="text"
-            id="username"
-            placeholder="Username"
-        >
+        <div class="logo">
+            🤖
+        </div>
 
-        <br>
+        <h1>AGRI ROBO</h1>
 
-        <input
-            type="password"
-            id="password"
-            placeholder="Password"
-        >
+        <p class="subtitle">
+            Smart Agricultural Rover
+        </p>
 
-        <br><br>
 
-        <button class="login" onclick="login()">
-            LOGIN
+        <div class="input-group">
+
+            <label>
+                OWNER USERNAME
+            </label>
+
+            <input
+                type="text"
+                id="username"
+                placeholder="Enter username"
+                autocomplete="username"
+            >
+
+        </div>
+
+
+        <div class="input-group">
+
+            <label>
+                OWNER PASSWORD
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter password"
+                autocomplete="current-password"
+            >
+
+        </div>
+
+
+        <button
+            class="login-btn"
+            onclick="login()">
+
+            🔐 ACCESS ROVER
+
         </button>
+
 
         <p id="error">
-            ❌ Wrong username or password
+            ❌ Invalid username or password
         </p>
 
     </div>
 
+</div>
 
-    <!-- ROVER CONTROL -->
 
-    <div id="roverPage">
 
-        <h1>🤖 AGRI ROBO</h1>
+<!-- =====================================
+     ROVER DASHBOARD
+===================================== -->
 
-        <h2>Owner Control Panel</h2>
+<div id="roverPage">
 
-        <p id="status">
-            Rover stopped
-        </p>
+<div class="container">
 
-        <br>
 
-        <button
-            class="control"
-            onclick="move('forward')">
-            ▲
-        </button>
+    <!-- HEADER -->
 
-        <br>
+    <header class="header">
 
-        <button
-            class="control"
-            onclick="move('left')">
-            ◀
-        </button>
+        <div class="brand">
 
-        <button
-            class="control stop"
-            onclick="move('stop')">
-            ■
-        </button>
+            <div class="brand-icon">
+                🌱
+            </div>
 
-        <button
-            class="control"
-            onclick="move('right')">
-            ▶
-        </button>
+            <div>
 
-        <br>
+                <h1>AGRI ROBO</h1>
+
+                <p>
+                    OWNER CONTROL SYSTEM
+                </p>
+
+            </div>
+
+        </div>
+
 
         <button
-            class="control"
-            onclick="move('backward')">
-            ▼
+            class="logout"
+            onclick="logout()">
+
+            Logout
+
         </button>
 
-        <br><br>
+    </header>
 
-        <button onclick="logout()">
-            LOGOUT
-        </button>
+
+
+    <!-- STATUS CARDS -->
+
+    <div class="status-row">
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                Rover Status
+            </div>
+
+            <div class="status-value online">
+                ● ONLINE
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                Connection
+            </div>
+
+            <div class="status-value online">
+                ● CONNECTED
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                Battery
+            </div>
+
+            <div
+                class="status-value battery">
+
+                🔋 85%
+
+            </div>
+
+        </div>
+
 
     </div>
 
 
-    <script>
 
-        // =========================
-        // YOUR LOGIN DETAILS
-        // =========================
+    <!-- MAIN -->
 
-        const USERNAME = "owner";
-        const PASSWORD = "agri123";
+    <div class="main-grid">
 
 
-        // =========================
-        // LOGIN
-        // =========================
+        <!-- CONTROL CARD -->
 
-        function login() {
+        <div class="card">
 
-            const username =
-                document.getElementById("username").value;
+            <div class="card-title">
 
-            const password =
-                document.getElementById("password").value;
+                <h2>
+                    🚜 Rover Control
+                </h2>
+
+                <span>
+                    HOLD TO MOVE
+                </span>
+
+            </div>
 
 
-            if (
-                username === USERNAME &&
-                password === PASSWORD
-            ) {
+            <div class="joystick">
 
-                document.getElementById("loginPage")
-                    .style.display = "none";
 
-                document.getElementById("roverPage")
-                    .style.display = "block";
+                <!-- TOP -->
 
-                document.getElementById("error")
-                    .style.display = "none";
+                <div></div>
 
-            } else {
+                <button
+                    class="control"
+                    id="forward"
+                    onpointerdown="startMove('forward', this)"
+                    onpointerup="stopMove(this)"
+                    onpointercancel="stopMove(this)"
+                    onpointerleave="stopMove(this)">
 
-                document.getElementById("error")
-                    .style.display = "block";
-            }
+                    ▲
+
+                </button>
+
+                <div></div>
+
+
+                <!-- MIDDLE -->
+
+                <button
+                    class="control"
+                    id="left"
+                    onpointerdown="startMove('left', this)"
+                    onpointerup="stopMove(this)"
+                    onpointercancel="stopMove(this)"
+                    onpointerleave="stopMove(this)">
+
+                    ◀
+
+                </button>
+
+
+                <button
+                    class="control stop"
+                    onclick="emergencyStop()">
+
+                    ■
+
+                </button>
+
+
+                <button
+                    class="control"
+                    id="right"
+                    onpointerdown="startMove('right', this)"
+                    onpointerup="stopMove(this)"
+                    onpointercancel="stopMove(this)"
+                    onpointerleave="stopMove(this)">
+
+                    ▶
+
+                </button>
+
+
+                <!-- BOTTOM -->
+
+                <div></div>
+
+                <button
+                    class="control"
+                    id="backward"
+                    onpointerdown="startMove('backward', this)"
+                    onpointerup="stopMove(this)"
+                    onpointercancel="stopMove(this)"
+                    onpointerleave="stopMove(this)">
+
+                    ▼
+
+                </button>
+
+                <div></div>
+
+
+            </div>
+
+
+            <!-- COMMAND -->
+
+            <div class="command-box">
+
+                <div class="command-label">
+                    Current Command
+                </div>
+
+                <div id="status">
+                    STOPPED
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- SYSTEM CARD -->
+
+        <div class="card">
+
+            <div class="card-title">
+
+                <h2>
+                    📡 System
+                </h2>
+
+                <span>
+                    LIVE
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-name">
+                    Controller
+                </span>
+
+                <span class="info-value">
+                    OWNER
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-name">
+                    Wi-Fi
+                </span>
+
+                <span class="info-value online">
+                    CONNECTED
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-name">
+                    Rover
+                </span>
+
+                <span class="info-value online">
+                    READY
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-name">
+                    Battery
+                </span>
+
+                <span class="info-value">
+                    85%
+                </span>
+
+            </div>
+
+
+            <div class="progress">
+
+                <div class="progress-bar"></div>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-name">
+                    Last Command
+                </span>
+
+                <span
+                    class="info-value"
+                    id="lastCommand">
+
+                    STOP
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+</div>
+
+
+
+<script>
+
+/* =====================================
+   OWNER LOGIN
+===================================== */
+
+const OWNER_USERNAME = "owner";
+const OWNER_PASSWORD = "agri123";
+
+
+function login() {
+
+    const username =
+        document.getElementById("username").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+
+    if (
+        username === OWNER_USERNAME &&
+        password === OWNER_PASSWORD
+    ) {
+
+        document.getElementById("loginPage")
+            .style.display = "none";
+
+        document.getElementById("roverPage")
+            .style.display = "block";
+
+        document.getElementById("error")
+            .style.display = "none";
+
+    }
+
+    else {
+
+        document.getElementById("error")
+            .style.display = "block";
+
+    }
+
+}
+
+
+/* =====================================
+   ENTER KEY LOGIN
+===================================== */
+
+document.getElementById("password")
+    .addEventListener("keydown", function(event) {
+
+        if (event.key === "Enter") {
+
+            login();
+
         }
 
-
-        // =========================
-        // ROVER CONTROL
-        // =========================
-
-        function move(direction) {
-
-            document.getElementById("status")
-                .innerText =
-                "Rover: " + direction.toUpperCase();
-
-            console.log("Command:", direction);
-        }
+    });
 
 
-        // =========================
-        // LOGOUT
-        // =========================
+/* =====================================
+   ROVER CONTROL
+===================================== */
 
-        function logout() {
+let moving = false;
+let currentDirection = "";
 
-            document.getElementById("roverPage")
-                .style.display = "none";
 
-            document.getElementById("loginPage")
-                .style.display = "block";
+function startMove(direction, button) {
 
-            document.getElementById("username")
-                .value = "";
+    if (moving) {
 
-            document.getElementById("password")
-                .value = "";
-        }
+        return;
 
-    </script>
+    }
+
+
+    moving = true;
+
+    currentDirection = direction;
+
+
+    button.classList.add("active");
+
+
+    document.getElementById("status")
+        .innerText =
+        direction.toUpperCase();
+
+
+    document.getElementById("lastCommand")
+        .innerText =
+        direction.toUpperCase();
+
+
+    console.log(
+        "START:",
+        direction
+    );
+
+
+    /*
+       ESP32 COMMAND WILL GO HERE
+
+       Example:
+
+       sendCommand(direction);
+    */
+
+}
+
+
+function stopMove(button) {
+
+    if (!moving) {
+
+        return;
+
+    }
+
+
+    moving = false;
+
+
+    if (button) {
+
+        button.classList.remove("active");
+
+    }
+
+
+    document.querySelectorAll(".control")
+        .forEach(function(btn) {
+
+            btn.classList.remove("active");
+
+        });
+
+
+    currentDirection = "";
+
+
+    document.getElementById("status")
+        .innerText =
+        "STOPPED";
+
+
+    document.getElementById("lastCommand")
+        .innerText =
+        "STOP";
+
+
+    console.log("STOP");
+
+
+    /*
+       ESP32 STOP COMMAND
+
+       Example:
+
+       sendCommand("stop");
+    */
+
+}
+
+
+/* =====================================
+   EMERGENCY STOP
+===================================== */
+
+function emergencyStop() {
+
+    moving = false;
+
+    currentDirection = "";
+
+
+    document.querySelectorAll(".control")
+        .forEach(function(btn) {
+
+            btn.classList.remove("active");
+
+        });
+
+
+    document.getElementById("status")
+        .innerText =
+        "EMERGENCY STOP";
+
+
+    document.getElementById("lastCommand")
+        .innerText =
+        "EMERGENCY STOP";
+
+
+    console.log("EMERGENCY STOP");
+
+
+    /*
+       ESP32:
+
+       sendCommand("stop");
+    */
+
+}
+
+
+/* =====================================
+   LOGOUT
+===================================== */
+
+function logout() {
+
+    emergencyStop();
+
+
+    document.getElementById("roverPage")
+        .style.display = "none";
+
+
+    document.getElementById("loginPage")
+        .style.display = "flex";
+
+
+    document.getElementById("username")
+        .value = "";
+
+    document.getElementById("password")
+        .value = "";
+
+}
+
+</script>
 
 </body>
 </html>
