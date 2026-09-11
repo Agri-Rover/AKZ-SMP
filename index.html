@@ -1,333 +1,198 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<title>Agri Robo | Owner Control</title>
-
-<style>
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    min-height: 100vh;
-
-    background:
-        radial-gradient(circle at top,
-        #174d2c,
-        #071b10 55%,
-        #020805);
-
-    color: white;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    padding: 20px;
-}
-
-
-/* ================= LOGIN ================= */
-
-#loginPage {
-
-    width: 100%;
-    max-width: 420px;
-
-    background: rgba(255,255,255,0.08);
-
-    border: 1px solid rgba(255,255,255,0.15);
-
-    border-radius: 25px;
-
-    padding: 35px;
-
-    text-align: center;
-
-    backdrop-filter: blur(15px);
-
-    box-shadow:
-        0 20px 50px rgba(0,0,0,0.5);
-}
-
-.logo {
-
-    font-size: 55px;
-
-    margin-bottom: 10px;
-}
-
-h1 {
-
-    font-size: 30px;
-
-    margin-bottom: 5px;
-}
-
-.subtitle {
-
-    color: #a8d8b5;
-
-    margin-bottom: 30px;
-}
-
-input {
-
-    width: 100%;
-
-    padding: 15px;
-
-    margin: 8px 0;
-
-    border: none;
-
-    border-radius: 12px;
-
-    outline: none;
-
-    background: rgba(255,255,255,0.12);
-
-    color: white;
-
-    font-size: 16px;
-}
-
-input::placeholder {
-
-    color: #aaa;
-}
-
-.loginButton {
-
-    width: 100%;
-
-    margin-top: 15px;
-
-    padding: 15px;
-
-    border: none;
-
-    border-radius: 12px;
-
-    background: #28a745;
-
-    color: white;
-
-    font-size: 17px;
-
-    font-weight: bold;
-
-    cursor: pointer;
-}
-
-.loginButton:hover {
-
-    background: #35c653;
-}
-
-#error {
-
-    margin-top: 15px;
-
-    color: #ff6b6b;
-
-    min-height: 20px;
-}
-
-
-/* ================= CONTROL PAGE ================= */
-
-#controlPage {
-
-    display: none;
-
-    width: 100%;
-
-    max-width: 700px;
-}
-
-.header {
-
-    text-align: center;
-
-    margin-bottom: 20px;
-}
-
-.header h1 {
-
-    font-size: 34px;
-}
-
-.header p {
-
-    color: #a8d8b5;
-
-    margin-top: 5px;
-}
-
-
-/* STATUS */
-
-.status {
-
-    text-align: center;
-
-    background: rgba(255,255,255,0.08);
-
-    padding: 15px;
-
-    border-radius: 15px;
-
-    margin-bottom: 25px;
-}
-
-.status span {
-
-    font-weight: bold;
-
-    color: #54e879;
-}
-
-
-/* CONTROLS */
-
-.controls {
-
-    display: grid;
-
-    grid-template-columns: repeat(3, 1fr);
-
-    gap: 15px;
-
-    max-width: 500px;
-
-    margin: auto;
-}
-
-.control {
-
-    min-height: 100px;
-
-    border: none;
-
-    border-radius: 20px;
-
-    font-size: 38px;
-
-    cursor: pointer;
-
-    background: rgba(255,255,255,0.12);
-
-    color: white;
-
-    box-shadow:
-        0 8px 20px rgba(0,0,0,0.3);
-
-    transition: 0.15s;
-}
-
-.control:active {
-
-    transform: scale(0.92);
-}
-
-.forward {
-
-    grid-column: 2;
-}
-
-.left {
-
-    grid-column: 1;
-    grid-row: 2;
-}
-
-.stop {
-
-    grid-column: 2;
-    grid-row: 2;
-
-    background: #c62828;
-}
-
-.right {
-
-    grid-column: 3;
-    grid-row: 2;
-}
-
-.backward {
-
-    grid-column: 2;
-    grid-row: 3;
-}
-
-
-/* FOOTER */
-
-.info {
-
-    margin-top: 30px;
-
-    padding: 18px;
-
-    border-radius: 15px;
-
-    background: rgba(255,255,255,0.06);
-
-    text-align: center;
-
-    color: #aaa;
-}
-
-.logout {
-
-    margin-top: 15px;
-
-    padding: 10px 20px;
-
-    border: 1px solid #555;
-
-    border-radius: 10px;
-
-    background: transparent;
-
-    color: white;
-
-    cursor: pointer;
-}
-
-
-/* MOBILE */
-
-@media(max-width:500px) {
-
-    .control {
-
-        min-height: 85px;
-
-        font-size: 32px;
-    }
-
-    .header h1 {
-
-        font-size: 28px;
-    }
-
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AGRI ROBO | Smart Agriculture Rover</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top, #173d24, #07130b 60%);
+            color: white;
+        }
+
+        /* HEADER */
+
+        header {
+            padding: 25px;
+            text-align: center;
+            background: rgba(10, 30, 16, 0.9);
+            border-bottom: 1px solid #35ff75;
+        }
+
+        header h1 {
+            color: #39ff88;
+            font-size: 38px;
+            letter-spacing: 2px;
+        }
+
+        header p {
+            margin-top: 8px;
+            color: #b8ffc9;
+        }
+
+        /* MAIN */
+
+        .container {
+            width: 95%;
+            max-width: 900px;
+            margin: 35px auto;
+        }
+
+        .card {
+            background: rgba(16, 39, 25, 0.9);
+            border: 1px solid #286b3b;
+            border-radius: 22px;
+            padding: 25px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.35);
+        }
+
+        /* CONNECTION */
+
+        .connection {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        input {
+            flex: 1;
+            min-width: 220px;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #3d8b52;
+            background: #08150c;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #39ff88;
+        }
+
+        .connect {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 12px;
+            background: #238636;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .connect:hover {
+            background: #2ca344;
+        }
+
+        /* STATUS */
+
+        .status {
+            text-align: center;
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 14px;
+            background: #08150c;
+            color: #39ff88;
+            border: 1px solid #286b3b;
+            font-size: 18px;
+        }
+
+        /* CONTROLLER */
+
+        .controller {
+            max-width: 430px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .control-btn {
+            width: 105px;
+            height: 80px;
+            margin: 7px;
+            border: none;
+            border-radius: 20px;
+            background: #238636;
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+            transition: 0.12s;
+            user-select: none;
+        }
+
+        .control-btn:hover {
+            background: #2ca344;
+        }
+
+        .control-btn:active {
+            transform: scale(0.92);
+        }
+
+        .stop {
+            background: #d32f2f;
+        }
+
+        .stop:hover {
+            background: #ef4444;
+        }
+
+        /* INFORMATION */
+
+        .info {
+            margin-top: 30px;
+            padding: 18px;
+            background: #08150c;
+            border-radius: 14px;
+            color: #b8ffc9;
+            line-height: 1.7;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: #777;
+            font-size: 14px;
+        }
+
+        /* MOBILE */
+
+        @media(max-width: 600px) {
+
+            header h1 {
+                font-size: 28px;
+            }
+
+            .control-btn {
+                width: 85px;
+                height: 70px;
+            }
+
+        }
+
+    </style>
 
 </head>
 
@@ -335,329 +200,347 @@ input::placeholder {
 <body>
 
 
-<!-- =====================================================
-     LOGIN PAGE
-====================================================== -->
+<header>
 
-<div id="loginPage">
+    <h1>🌱 AGRI ROBO</h1>
 
-    <div class="logo">🌱🤖</div>
+    <p>Smart Agriculture Rover</p>
 
-    <h1>AGRI ROBO</h1>
-
-    <div class="subtitle">
-        Owner Control System
-    </div>
+</header>
 
 
-    <input
-        type="text"
-        id="username"
-        placeholder="Owner username"
-        autocomplete="off"
-    >
+<div class="container">
+
+    <div class="card">
 
 
-    <input
-        type="password"
-        id="password"
-        placeholder="Password"
-    >
+        <!-- ESP32 IP -->
+
+        <div class="connection">
+
+            <input
+                type="text"
+                id="espIP"
+                placeholder="ESP32 IP e.g. 192.168.1.50">
+
+            <button
+                class="connect"
+                onclick="connectRover()">
+
+                CONNECT
+
+            </button>
+
+        </div>
 
 
-    <button
-        class="loginButton"
-        onclick="login()">
+        <!-- STATUS -->
 
-        LOGIN
+        <div
+            class="status"
+            id="status">
 
-    </button>
+            Enter ESP32 IP and connect
 
-
-    <div id="error"></div>
-
-</div>
+        </div>
 
 
+        <!-- CONTROLLER -->
 
-<!-- =====================================================
-     CONTROL PAGE
-====================================================== -->
-
-<div id="controlPage">
-
-    <div class="header">
-
-        <h1>🌱 AGRI ROBO 🤖</h1>
-
-        <p>
-            Smart Agricultural Rover
-        </p>
-
-    </div>
+        <div class="controller">
 
 
-    <div class="status">
+            <!-- FORWARD -->
 
-        Connection:
-        <span id="connection">
-            Not connected
-        </span>
+            <div class="row">
 
-        <br>
+                <button
+                    class="control-btn"
+                    onclick="sendCommand('forward')">
 
-        Command:
-        <span id="command">
-            STOP
-        </span>
+                    ⬆
 
-    </div>
+                </button>
+
+            </div>
 
 
+            <!-- LEFT STOP RIGHT -->
 
-    <div class="controls">
+            <div class="row">
 
-        <button
-            class="control forward"
-            onmousedown="startMove('forward')"
-            onmouseup="stopMove()"
-            ontouchstart="startMove('forward')"
-            ontouchend="stopMove()">
+                <button
+                    class="control-btn"
+                    onclick="sendCommand('left')">
 
-            ⬆️
+                    ⬅
 
-        </button>
+                </button>
 
 
-        <button
-            class="control left"
-            onmousedown="startMove('left')"
-            onmouseup="stopMove()"
-            ontouchstart="startMove('left')"
-            ontouchend="stopMove()">
+                <button
+                    class="control-btn stop"
+                    onclick="sendCommand('stop')">
 
-            ⬅️
+                    ■
 
-        </button>
+                </button>
 
 
-        <button
-            class="control stop"
-            onclick="sendCommand('stop')">
+                <button
+                    class="control-btn"
+                    onclick="sendCommand('right')">
 
-            🛑
+                    ➡
 
-        </button>
+                </button>
 
-
-        <button
-            class="control right"
-            onmousedown="startMove('right')"
-            onmouseup="stopMove()"
-            ontouchstart="startMove('right')"
-            ontouchend="stopMove()">
-
-            ➡️
-
-        </button>
+            </div>
 
 
-        <button
-            class="control backward"
-            onmousedown="startMove('backward')"
-            onmouseup="stopMove()"
-            ontouchstart="startMove('backward')"
-            ontouchend="stopMove()">
+            <!-- BACKWARD -->
 
-            ⬇️
+            <div class="row">
 
-        </button>
+                <button
+                    class="control-btn"
+                    onclick="sendCommand('backward')">
 
-    </div>
+                    ⬇
 
+                </button>
 
-
-    <div class="info">
-
-        <p>
-            Hold a direction button to move.
-        </p>
-
-        <p>
-            Release it to stop the rover.
-        </p>
+            </div>
 
 
-        <button
-            class="logout"
-            onclick="logout()">
+        </div>
 
-            LOGOUT
 
-        </button>
+        <div class="info">
+
+            <b>How to use:</b><br>
+
+            1. Connect ESP32 to Wi-Fi.<br>
+
+            2. Find the ESP32 IP address in Thonny.<br>
+
+            3. Enter the IP above.<br>
+
+            4. Press CONNECT.<br>
+
+            5. Use the buttons to drive the rover.
+
+        </div>
+
 
     </div>
 
 </div>
 
+
+<footer>
+
+    AGRI ROBO • ESP32 Wi-Fi Rover
+
+</footer>
 
 
 <script>
 
-/* =====================================================
-   SETTINGS
-====================================================== */
+
+let roverIP = "";
 
 
-/*
-   ESP32 Access Point IP
+// ============================================
+// CONNECT
+// ============================================
 
-   Normally:
-   192.168.4.1
-*/
+function connectRover() {
 
-const ESP32_IP = "192.168.4.1";
+    let ip = document
+        .getElementById("espIP")
+        .value
+        .trim();
 
+    if (ip === "") {
 
-/*
-   CHANGE THESE LOGIN DETAILS
-*/
+        document
+            .getElementById("status")
+            .innerText = "Please enter ESP32 IP";
 
-const OWNER_USERNAME = "owner";
-
-const OWNER_PASSWORD = "agri123";
-
-
-/* =====================================================
-   LOGIN
-====================================================== */
-
-function login() {
-
-    const username =
-        document.getElementById("username").value;
-
-    const password =
-        document.getElementById("password").value;
-
-
-    if (
-        username === OWNER_USERNAME &&
-        password === OWNER_PASSWORD
-    ) {
-
-        document.getElementById("loginPage")
-            .style.display = "none";
-
-        document.getElementById("controlPage")
-            .style.display = "block";
-
-        document.getElementById("connection")
-            .innerText = "Ready";
+        return;
 
     }
 
-    else {
 
-        document.getElementById("error")
-            .innerText = "Incorrect username or password.";
+    // Remove http:// if user enters it
 
-    }
+    ip = ip.replace("http://", "");
+    ip = ip.replace("https://", "");
+
+    ip = ip.replace(/\/$/, "");
+
+
+    roverIP = "http://" + ip;
+
+
+    document
+        .getElementById("status")
+        .innerText = "Connecting...";
+
+
+    fetch(roverIP + "/")
+        .then(response => {
+
+            if (!response.ok) {
+                throw new Error("Connection failed");
+            }
+
+            return response.text();
+
+        })
+
+        .then(data => {
+
+            document
+                .getElementById("status")
+                .innerText = "🟢 ROVER CONNECTED";
+
+        })
+
+        .catch(error => {
+
+            document
+                .getElementById("status")
+                .innerText =
+                "🔴 Connection failed";
+
+        });
 
 }
 
 
-/* =====================================================
-   SEND COMMAND
-====================================================== */
+// ============================================
+// SEND COMMAND
+// ============================================
 
 function sendCommand(command) {
 
-    const url =
-        "http://" + ESP32_IP + "/" + command;
 
+    if (roverIP === "") {
 
-    fetch(url, {
-        method: "GET",
-        mode: "cors"
-    })
-
-    .then(response => {
-
-        document.getElementById("connection")
-            .innerText = "Connected";
-
-        document.getElementById("command")
+        document
+            .getElementById("status")
             .innerText =
-            command.toUpperCase();
+            "Connect the rover first";
 
-    })
+        return;
 
-    .catch(error => {
+    }
 
-        document.getElementById("connection")
-            .innerText = "Connection failed";
 
-        console.log(error);
+    fetch(roverIP + "/" + command)
 
-    });
+        .then(response => {
+
+            return response.text();
+
+        })
+
+        .then(data => {
+
+            document
+                .getElementById("status")
+                .innerText =
+                "🚗 " + data;
+
+        })
+
+        .catch(error => {
+
+            document
+                .getElementById("status")
+                .innerText =
+                "🔴 Rover disconnected";
+
+        });
 
 }
 
 
-/* =====================================================
-   MOVEMENT
-====================================================== */
+// ============================================
+// KEYBOARD CONTROL
+// ============================================
 
-let moving = false;
+document.addEventListener("keydown", function(event) {
 
-
-function startMove(command) {
-
-    moving = true;
-
-    sendCommand(command);
-
-}
+    if (event.repeat) return;
 
 
-function stopMove() {
+    if (event.key === "ArrowUp" ||
+        event.key.toLowerCase() === "w") {
 
-    if (moving) {
+        sendCommand("forward");
 
-        moving = false;
+    }
+
+
+    else if (event.key === "ArrowDown" ||
+             event.key.toLowerCase() === "s") {
+
+        sendCommand("backward");
+
+    }
+
+
+    else if (event.key === "ArrowLeft" ||
+             event.key.toLowerCase() === "a") {
+
+        sendCommand("left");
+
+    }
+
+
+    else if (event.key === "ArrowRight" ||
+             event.key.toLowerCase() === "d") {
+
+        sendCommand("right");
+
+    }
+
+
+    else if (event.key === " ") {
 
         sendCommand("stop");
 
     }
 
-}
+});
 
 
-/* =====================================================
-   LOGOUT
-====================================================== */
+// ============================================
+// RELEASE KEY = STOP
+// ============================================
 
-function logout() {
+document.addEventListener("keyup", function(event) {
 
-    sendCommand("stop");
+    if (
+        event.key === "ArrowUp" ||
+        event.key === "ArrowDown" ||
+        event.key === "ArrowLeft" ||
+        event.key === "ArrowRight" ||
+        event.key.toLowerCase() === "w" ||
+        event.key.toLowerCase() === "a" ||
+        event.key.toLowerCase() === "s" ||
+        event.key.toLowerCase() === "d"
+    ) {
 
+        sendCommand("stop");
 
-    document.getElementById("controlPage")
-        .style.display = "none";
+    }
 
+});
 
-    document.getElementById("loginPage")
-        .style.display = "block";
-
-
-    document.getElementById("username")
-        .value = "";
-
-    document.getElementById("password")
-        .value = "";
-
-}
 
 </script>
 
@@ -665,3 +548,4 @@ function logout() {
 </body>
 
 </html>
+```
