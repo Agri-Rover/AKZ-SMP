@@ -3,196 +3,232 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>AGRI ROBO | Smart Agriculture Rover</title>
+<title>AGRI ROBO</title>
 
-    <style>
+<style>
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
 
-        body {
-            font-family: Arial, sans-serif;
-            min-height: 100vh;
-            background:
-                radial-gradient(circle at top, #173d24, #07130b 60%);
-            color: white;
-        }
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    background:
+        radial-gradient(circle at 50% 0%, #164d2a 0%, #07150b 45%, #030806 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-        /* HEADER */
+.container {
+    width: 95%;
+    max-width: 520px;
+    padding: 20px;
+}
 
-        header {
-            padding: 25px;
-            text-align: center;
-            background: rgba(10, 30, 16, 0.9);
-            border-bottom: 1px solid #35ff75;
-        }
+.card {
+    background: rgba(10, 25, 15, 0.94);
+    border: 1px solid rgba(57,255,136,0.25);
+    border-radius: 28px;
+    padding: 25px;
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.5),
+        0 0 30px rgba(57,255,136,0.06);
+    backdrop-filter: blur(10px);
+}
 
-        header h1 {
-            color: #39ff88;
-            font-size: 38px;
-            letter-spacing: 2px;
-        }
 
-        header p {
-            margin-top: 8px;
-            color: #b8ffc9;
-        }
+/* =========================
+   HEADER
+========================= */
 
-        /* MAIN */
+.logo {
+    text-align: center;
+    font-size: 45px;
+}
 
-        .container {
-            width: 95%;
-            max-width: 900px;
-            margin: 35px auto;
-        }
+h1 {
+    text-align: center;
+    margin: 5px 0;
+    font-size: 34px;
+    letter-spacing: 3px;
+    color: #39ff88;
+}
 
-        .card {
-            background: rgba(16, 39, 25, 0.9);
-            border: 1px solid #286b3b;
-            border-radius: 22px;
-            padding: 25px;
-            box-shadow: 0 10px 35px rgba(0,0,0,0.35);
-        }
+.subtitle {
+    text-align: center;
+    color: #91cfa5;
+    font-size: 13px;
+    letter-spacing: 2px;
+}
 
-        /* CONNECTION */
 
-        .connection {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 25px;
-        }
+/* =========================
+   CONNECTION
+========================= */
 
-        input {
-            flex: 1;
-            min-width: 220px;
-            padding: 15px;
-            border-radius: 12px;
-            border: 1px solid #3d8b52;
-            background: #08150c;
-            color: white;
-            font-size: 16px;
-            outline: none;
-        }
+.connection {
+    margin-top: 25px;
+    display: flex;
+    gap: 10px;
+}
 
-        input:focus {
-            border-color: #39ff88;
-        }
+#ip {
+    flex: 1;
+    min-width: 0;
+    padding: 14px;
+    border-radius: 13px;
+    border: 1px solid #315d3e;
+    background: #061009;
+    color: white;
+    font-size: 15px;
+    outline: none;
+}
 
-        .connect {
-            padding: 15px 25px;
-            border: none;
-            border-radius: 12px;
-            background: #238636;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
+#ip:focus {
+    border-color: #39ff88;
+}
 
-        .connect:hover {
-            background: #2ca344;
-        }
+.connect {
+    padding: 14px 18px;
+    border: none;
+    border-radius: 13px;
+    background: #238636;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
 
-        /* STATUS */
+.connect:active {
+    transform: scale(0.96);
+}
 
-        .status {
-            text-align: center;
-            padding: 15px;
-            margin-bottom: 30px;
-            border-radius: 14px;
-            background: #08150c;
-            color: #39ff88;
-            border: 1px solid #286b3b;
-            font-size: 18px;
-        }
 
-        /* CONTROLLER */
+/* =========================
+   STATUS
+========================= */
 
-        .controller {
-            max-width: 430px;
-            margin: auto;
-            text-align: center;
-        }
+.status {
+    margin-top: 15px;
+    padding: 13px;
+    border-radius: 13px;
+    text-align: center;
+    background: #061009;
+    border: 1px solid #1e492c;
+    color: #39ff88;
+    font-size: 15px;
+}
 
-        .row {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+.status.offline {
+    color: #ff7777;
+}
 
-        .control-btn {
-            width: 105px;
-            height: 80px;
-            margin: 7px;
-            border: none;
-            border-radius: 20px;
-            background: #238636;
-            color: white;
-            font-size: 32px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
-            transition: 0.12s;
-            user-select: none;
-        }
 
-        .control-btn:hover {
-            background: #2ca344;
-        }
+/* =========================
+   CONTROLLER
+========================= */
 
-        .control-btn:active {
-            transform: scale(0.92);
-        }
+.controller {
+    margin-top: 30px;
+    text-align: center;
+}
 
-        .stop {
-            background: #d32f2f;
-        }
+.row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-        .stop:hover {
-            background: #ef4444;
-        }
+.control {
+    width: 105px;
+    height: 82px;
+    margin: 6px;
+    border: 1px solid #317844;
+    border-radius: 22px;
+    background: linear-gradient(145deg, #238636, #145622);
+    color: white;
+    font-size: 35px;
+    cursor: pointer;
 
-        /* INFORMATION */
+    box-shadow:
+        0 8px 18px rgba(0,0,0,0.4),
+        inset 0 1px rgba(255,255,255,0.08);
 
-        .info {
-            margin-top: 30px;
-            padding: 18px;
-            background: #08150c;
-            border-radius: 14px;
-            color: #b8ffc9;
-            line-height: 1.7;
-        }
+    user-select: none;
+    -webkit-user-select: none;
 
-        footer {
-            text-align: center;
-            margin-top: 30px;
-            padding: 20px;
-            color: #777;
-            font-size: 14px;
-        }
+    touch-action: none;
 
-        /* MOBILE */
+    transition: transform 0.08s, background 0.08s;
+}
 
-        @media(max-width: 600px) {
+.control:active,
+.control.pressed {
+    transform: scale(0.93);
+    background: #35a94e;
+}
 
-            header h1 {
-                font-size: 28px;
-            }
+.stop {
+    background: linear-gradient(145deg, #e53935, #991f1c);
+    border-color: #ff5b57;
+}
 
-            .control-btn {
-                width: 85px;
-                height: 70px;
-            }
+.stop:active,
+.stop.pressed {
+    background: #ff4540;
+}
 
-        }
 
-    </style>
+/* =========================
+   SPEED
+========================= */
+
+.speed-box {
+    margin-top: 25px;
+    padding: 15px;
+    background: #061009;
+    border-radius: 15px;
+}
+
+.speed-title {
+    color: #9bc8a8;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+input[type="range"] {
+    width: 100%;
+    accent-color: #39ff88;
+}
+
+
+/* =========================
+   INFO
+========================= */
+
+.info {
+    margin-top: 20px;
+    text-align: center;
+    color: #75927d;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 18px;
+    color: #52685a;
+    font-size: 11px;
+}
+
+</style>
 
 </head>
 
@@ -200,155 +236,192 @@
 <body>
 
 
-<header>
-
-    <h1>🌱 AGRI ROBO</h1>
-
-    <p>Smart Agriculture Rover</p>
-
-</header>
-
-
 <div class="container">
 
-    <div class="card">
+<div class="card">
 
 
-        <!-- ESP32 IP -->
+<div class="logo">🌱</div>
 
-        <div class="connection">
+<h1>AGRI ROBO</h1>
 
-            <input
-                type="text"
-                id="espIP"
-                placeholder="ESP32 IP e.g. 192.168.1.50">
-
-            <button
-                class="connect"
-                onclick="connectRover()">
-
-                CONNECT
-
-            </button>
-
-        </div>
+<div class="subtitle">
+SMART AGRICULTURE ROVER
+</div>
 
 
-        <!-- STATUS -->
+<!-- CONNECTION -->
 
-        <div
-            class="status"
-            id="status">
+<div class="connection">
 
-            Enter ESP32 IP and connect
+<input
+    id="ip"
+    type="text"
+    placeholder="ESP32 IP address"
+>
 
-        </div>
+<button
+    class="connect"
+    onclick="connectRover()">
 
+CONNECT
 
-        <!-- CONTROLLER -->
-
-        <div class="controller">
-
-
-            <!-- FORWARD -->
-
-            <div class="row">
-
-                <button
-                    class="control-btn"
-                    onclick="sendCommand('forward')">
-
-                    ⬆
-
-                </button>
-
-            </div>
-
-
-            <!-- LEFT STOP RIGHT -->
-
-            <div class="row">
-
-                <button
-                    class="control-btn"
-                    onclick="sendCommand('left')">
-
-                    ⬅
-
-                </button>
-
-
-                <button
-                    class="control-btn stop"
-                    onclick="sendCommand('stop')">
-
-                    ■
-
-                </button>
-
-
-                <button
-                    class="control-btn"
-                    onclick="sendCommand('right')">
-
-                    ➡
-
-                </button>
-
-            </div>
-
-
-            <!-- BACKWARD -->
-
-            <div class="row">
-
-                <button
-                    class="control-btn"
-                    onclick="sendCommand('backward')">
-
-                    ⬇
-
-                </button>
-
-            </div>
-
-
-        </div>
-
-
-        <div class="info">
-
-            <b>How to use:</b><br>
-
-            1. Connect ESP32 to Wi-Fi.<br>
-
-            2. Find the ESP32 IP address in Thonny.<br>
-
-            3. Enter the IP above.<br>
-
-            4. Press CONNECT.<br>
-
-            5. Use the buttons to drive the rover.
-
-        </div>
-
-
-    </div>
+</button>
 
 </div>
 
 
-<footer>
+<!-- STATUS -->
 
-    AGRI ROBO • ESP32 Wi-Fi Rover
+<div
+    id="status"
+    class="status">
 
-</footer>
+NOT CONNECTED
+
+</div>
+
+
+<!-- CONTROLLER -->
+
+<div class="controller">
+
+
+<!-- FORWARD -->
+
+<div class="row">
+
+<button
+    class="control"
+    id="forward"
+    data-command="forward">
+
+⬆
+
+</button>
+
+</div>
+
+
+<!-- LEFT STOP RIGHT -->
+
+<div class="row">
+
+<button
+    class="control"
+    id="left"
+    data-command="left">
+
+⬅
+
+</button>
+
+
+<button
+    class="control stop"
+    id="stop">
+
+■
+
+</button>
+
+
+<button
+    class="control"
+    id="right"
+    data-command="right">
+
+➡
+
+</button>
+
+</div>
+
+
+<!-- BACKWARD -->
+
+<div class="row">
+
+<button
+    class="control"
+    id="backward"
+    data-command="backward">
+
+⬇
+
+</button>
+
+</div>
+
+
+</div>
+
+
+<!-- SPEED -->
+
+<div class="speed-box">
+
+<div class="speed-title">
+MOTOR SPEED
+</div>
+
+<input
+    id="speed"
+    type="range"
+    min="20"
+    max="100"
+    value="70"
+>
+
+</div>
+
+
+<div class="info">
+
+<b>HOLD</b> a direction button to drive<br>
+Release the button to automatically stop<br>
+Keyboard: W A S D / Arrow Keys
+
+</div>
+
+
+<div class="footer">
+
+ESP32 • L298N • AGRI ROBO
+
+</div>
+
+
+</div>
+
+</div>
 
 
 <script>
 
 
 let roverIP = "";
+let currentCommand = null;
+let stopTimer = null;
+
+
+// ============================================
+// STATUS
+// ============================================
+
+function setStatus(text, offline = false) {
+
+    const status =
+        document.getElementById("status");
+
+    status.innerText = text;
+
+    if (offline) {
+        status.classList.add("offline");
+    } else {
+        status.classList.remove("offline");
+    }
+}
 
 
 // ============================================
@@ -357,65 +430,62 @@ let roverIP = "";
 
 function connectRover() {
 
-    let ip = document
-        .getElementById("espIP")
+    let ip =
+        document.getElementById("ip")
         .value
         .trim();
 
-    if (ip === "") {
+    if (!ip) {
 
-        document
-            .getElementById("status")
-            .innerText = "Please enter ESP32 IP";
+        setStatus("ENTER ESP32 IP", true);
 
         return;
-
     }
 
 
-    // Remove http:// if user enters it
-
-    ip = ip.replace("http://", "");
-    ip = ip.replace("https://", "");
-
-    ip = ip.replace(/\/$/, "");
+    ip = ip
+        .replace("http://", "")
+        .replace("https://", "")
+        .replace(/\/$/, "");
 
 
     roverIP = "http://" + ip;
 
 
-    document
-        .getElementById("status")
-        .innerText = "Connecting...";
+    setStatus("CONNECTING...");
 
 
-    fetch(roverIP + "/")
-        .then(response => {
+    fetch(roverIP + "/", {
+        method: "GET",
+        cache: "no-store"
+    })
 
-            if (!response.ok) {
-                throw new Error("Connection failed");
-            }
+    .then(response => {
 
-            return response.text();
+        if (!response.ok) {
+            throw new Error();
+        }
 
-        })
+        return response.text();
 
-        .then(data => {
+    })
 
-            document
-                .getElementById("status")
-                .innerText = "🟢 ROVER CONNECTED";
+    .then(() => {
 
-        })
+        setStatus("🟢 ROVER CONNECTED");
 
-        .catch(error => {
+    })
 
-            document
-                .getElementById("status")
-                .innerText =
-                "🔴 Connection failed";
+    .catch(() => {
 
-        });
+        roverIP = "";
+
+        setStatus(
+            "🔴 CONNECTION FAILED",
+            true
+        );
+
+    });
 
 }
 
@@ -426,120 +496,466 @@ function connectRover() {
 
 function sendCommand(command) {
 
+    if (!roverIP) {
 
-    if (roverIP === "") {
-
-        document
-            .getElementById("status")
-            .innerText =
-            "Connect the rover first";
+        setStatus(
+            "CONNECT ESP32 FIRST",
+            true
+        );
 
         return;
 
     }
 
 
-    fetch(roverIP + "/" + command)
+    fetch(
+        roverIP + "/" + command,
+        {
+            method: "GET",
+            cache: "no-store"
+        }
+    )
 
-        .then(response => {
+    .then(response => response.text())
 
-            return response.text();
+    .then(data => {
 
-        })
+        setStatus("🚗 " + data);
 
-        .then(data => {
+    })
 
-            document
-                .getElementById("status")
-                .innerText =
-                "🚗 " + data;
+    .catch(() => {
 
-        })
+        stopCar();
 
-        .catch(error => {
+        setStatus(
+            "🔴 ROVER DISCONNECTED",
+            true
+        );
 
-            document
-                .getElementById("status")
-                .innerText =
-                "🔴 Rover disconnected";
+    });
+
+}
+
+
+// ============================================
+// STOP
+// ============================================
+
+function stopCar() {
+
+    currentCommand = null;
+
+    clearTimeout(stopTimer);
+
+
+    document
+        .querySelectorAll(".control")
+        .forEach(button => {
+
+            button.classList.remove("pressed");
 
         });
 
+
+    if (!roverIP) {
+        return;
+    }
+
+
+    fetch(
+        roverIP + "/stop",
+        {
+            method: "GET",
+            cache: "no-store"
+        }
+    )
+    .catch(() => {});
+
+
+    setStatus("■ STOPPED");
+
 }
+
+
+// ============================================
+// START HOLD
+// ============================================
+
+function startDrive(command, button) {
+
+    if (!roverIP) {
+
+        setStatus(
+            "CONNECT ESP32 FIRST",
+            true
+        );
+
+        return;
+
+    }
+
+
+    // Stop previous direction first
+
+    if (currentCommand &&
+        currentCommand !== command) {
+
+        sendCommand("stop");
+
+    }
+
+
+    currentCommand = command;
+
+    button.classList.add("pressed");
+
+
+    sendCommand(command);
+
+
+    // Keep sending while button is held
+    // This also acts as a communication heartbeat.
+
+    clearInterval(button.holdTimer);
+
+
+    button.holdTimer = setInterval(() => {
+
+        if (currentCommand === command) {
+
+            sendCommand(command);
+
+        }
+
+    }, 250);
+
+}
+
+
+// ============================================
+// END HOLD
+// ============================================
+
+function endDrive(button) {
+
+    clearInterval(button.holdTimer);
+
+    button.classList.remove("pressed");
+
+    stopCar();
+
+}
+
+
+// ============================================
+// BUTTON EVENTS
+// ============================================
+
+document
+.querySelectorAll("[data-command]")
+.forEach(button => {
+
+
+    const command =
+        button.dataset.command;
+
+
+    // Mouse
+
+    button.addEventListener(
+        "mousedown",
+        function(event) {
+
+            event.preventDefault();
+
+            startDrive(
+                command,
+                button
+            );
+
+        }
+    );
+
+
+    button.addEventListener(
+        "mouseup",
+        function(event) {
+
+            event.preventDefault();
+
+            endDrive(button);
+
+        }
+    );
+
+
+    button.addEventListener(
+        "mouseleave",
+        function() {
+
+            if (currentCommand === command) {
+
+                endDrive(button);
+
+            }
+
+        }
+    );
+
+
+    // Touch
+
+    button.addEventListener(
+        "touchstart",
+        function(event) {
+
+            event.preventDefault();
+
+            startDrive(
+                command,
+                button
+            );
+
+        },
+        { passive: false }
+    );
+
+
+    button.addEventListener(
+        "touchend",
+        function(event) {
+
+            event.preventDefault();
+
+            endDrive(button);
+
+        },
+        { passive: false }
+    );
+
+
+    button.addEventListener(
+        "touchcancel",
+        function(event) {
+
+            event.preventDefault();
+
+            endDrive(button);
+
+        },
+        { passive: false }
+    );
+
+});
+
+
+// ============================================
+// STOP BUTTON
+// ============================================
+
+const stopButton =
+    document.getElementById("stop");
+
+
+stopButton.addEventListener(
+    "mousedown",
+    function(event) {
+
+        event.preventDefault();
+
+        stopCar();
+
+        stopButton.classList.add("pressed");
+
+    }
+);
+
+
+stopButton.addEventListener(
+    "mouseup",
+    function() {
+
+        stopButton.classList.remove("pressed");
+
+    }
+);
+
+
+stopButton.addEventListener(
+    "touchstart",
+    function(event) {
+
+        event.preventDefault();
+
+        stopCar();
+
+        stopButton.classList.add("pressed");
+
+    },
+    { passive: false }
+);
+
+
+stopButton.addEventListener(
+    "touchend",
+    function(event) {
+
+        event.preventDefault();
+
+        stopButton.classList.remove("pressed");
+
+    },
+    { passive: false }
+);
 
 
 // ============================================
 // KEYBOARD CONTROL
 // ============================================
 
-document.addEventListener("keydown", function(event) {
+const keyMap = {
 
-    if (event.repeat) return;
+    "ArrowUp": "forward",
+    "w": "forward",
+    "W": "forward",
+
+    "ArrowDown": "backward",
+    "s": "backward",
+    "S": "backward",
+
+    "ArrowLeft": "left",
+    "a": "left",
+    "A": "left",
+
+    "ArrowRight": "right",
+    "d": "right",
+    "D": "right"
+
+};
 
 
-    if (event.key === "ArrowUp" ||
-        event.key.toLowerCase() === "w") {
+let keyboardButton = null;
 
-        sendCommand("forward");
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.repeat) {
+            return;
+        }
+
+
+        if (event.code === "Space") {
+
+            event.preventDefault();
+
+            stopCar();
+
+            return;
+
+        }
+
+
+        const command =
+            keyMap[event.key];
+
+
+        if (!command) {
+            return;
+        }
+
+
+        event.preventDefault();
+
+
+        const button =
+            document.querySelector(
+                '[data-command="' +
+                command +
+                '"]'
+            );
+
+
+        if (button) {
+
+            keyboardButton = button;
+
+            startDrive(
+                command,
+                button
+            );
+
+        }
 
     }
+);
 
 
-    else if (event.key === "ArrowDown" ||
-             event.key.toLowerCase() === "s") {
+document.addEventListener(
+    "keyup",
+    function(event) {
 
-        sendCommand("backward");
+        if (event.code === "Space") {
+
+            stopCar();
+
+            return;
+
+        }
+
+
+        const command =
+            keyMap[event.key];
+
+
+        if (!command) {
+            return;
+        }
+
+
+        event.preventDefault();
+
+
+        if (keyboardButton) {
+
+            endDrive(keyboardButton);
+
+            keyboardButton = null;
+
+        }
 
     }
-
-
-    else if (event.key === "ArrowLeft" ||
-             event.key.toLowerCase() === "a") {
-
-        sendCommand("left");
-
-    }
-
-
-    else if (event.key === "ArrowRight" ||
-             event.key.toLowerCase() === "d") {
-
-        sendCommand("right");
-
-    }
-
-
-    else if (event.key === " ") {
-
-        sendCommand("stop");
-
-    }
-
-});
+);
 
 
 // ============================================
-// RELEASE KEY = STOP
+// SAFETY STOP WHEN PAGE IS LEFT
 // ============================================
 
-document.addEventListener("keyup", function(event) {
+window.addEventListener(
+    "blur",
+    function() {
 
-    if (
-        event.key === "ArrowUp" ||
-        event.key === "ArrowDown" ||
-        event.key === "ArrowLeft" ||
-        event.key === "ArrowRight" ||
-        event.key.toLowerCase() === "w" ||
-        event.key.toLowerCase() === "a" ||
-        event.key.toLowerCase() === "s" ||
-        event.key.toLowerCase() === "d"
-    ) {
-
-        sendCommand("stop");
+        stopCar();
 
     }
+);
 
-});
+
+document.addEventListener(
+    "visibilitychange",
+    function() {
+
+        if (document.hidden) {
+
+            stopCar();
+
+        }
+
+    }
+);
 
 
 </script>
