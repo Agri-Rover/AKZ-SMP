@@ -1,22 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<title>Agri Robo</title>
 
-<title>AGRI ROBO | Control</title>
-
-<!-- MQTT.js -->
 <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 
 <style>
-
 * {
     box-sizing: border-box;
     margin: 0;
@@ -24,739 +16,273 @@
 }
 
 body {
-
+    font-family: Arial, sans-serif;
     min-height: 100vh;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
     background:
-        radial-gradient(
-            circle at top,
-            #174d2c,
-            #071b10 55%,
-            #020805
-        );
-
+        radial-gradient(circle at top, #183d25, #07110b 55%, #030705);
     color: white;
-
     display: flex;
-
     justify-content: center;
-
     align-items: center;
-
     padding: 20px;
 }
 
-
-/* =========================================================
-   LOGIN
-========================================================= */
-
-#loginPage {
-
+.container {
     width: 100%;
-
-    max-width: 420px;
-
-    padding: 35px;
-
-    text-align: center;
-
-    background:
-        rgba(255,255,255,0.08);
-
-    border:
-        1px solid
-        rgba(255,255,255,0.15);
-
-    border-radius: 25px;
-
-    backdrop-filter: blur(15px);
-
-    box-shadow:
-        0 20px 50px
-        rgba(0,0,0,0.5);
-}
-
-.logo {
-
-    font-size: 60px;
-
-    margin-bottom: 10px;
-}
-
-#loginPage h1 {
-
-    font-size: 32px;
-
-    margin-bottom: 8px;
-}
-
-.subtitle {
-
-    color: #a8d8b5;
-
-    margin-bottom: 30px;
-}
-
-input {
-
-    width: 100%;
-
-    padding: 15px;
-
-    margin: 8px 0;
-
-    border: none;
-
-    border-radius: 12px;
-
-    outline: none;
-
-    background:
-        rgba(255,255,255,0.12);
-
-    color: white;
-
-    font-size: 16px;
-}
-
-input::placeholder {
-
-    color: #aaa;
-}
-
-.loginButton {
-
-    width: 100%;
-
-    margin-top: 15px;
-
-    padding: 15px;
-
-    border: none;
-
-    border-radius: 12px;
-
-    background: #28a745;
-
-    color: white;
-
-    font-size: 17px;
-
-    font-weight: bold;
-
-    cursor: pointer;
-}
-
-.loginButton:hover {
-
-    background: #35c653;
-}
-
-#error {
-
-    margin-top: 15px;
-
-    color: #ff6b6b;
-
-    min-height: 20px;
-}
-
-
-/* =========================================================
-   CONTROL PAGE
-========================================================= */
-
-#controlPage {
-
-    display: none;
-
-    width: 100%;
-
-    max-width: 700px;
+    max-width: 500px;
 }
 
 .header {
-
     text-align: center;
-
     margin-bottom: 20px;
 }
 
-.header h1 {
-
-    font-size: 36px;
+.logo {
+    font-size: 55px;
 }
 
-.header p {
+h1 {
+    font-size: 34px;
+    color: #6cff8d;
+    letter-spacing: 2px;
+}
 
-    color: #a8d8b5;
-
+.subtitle {
+    color: #a8b8ad;
     margin-top: 5px;
 }
 
-
-/* =========================================================
-   STATUS
-========================================================= */
+.panel {
+    background: rgba(15, 30, 20, 0.94);
+    border: 1px solid #285c38;
+    border-radius: 25px;
+    padding: 25px;
+    box-shadow: 0 15px 50px rgba(0,0,0,.5);
+}
 
 .status {
-
-    text-align: center;
-
-    background:
-        rgba(255,255,255,0.08);
-
-    padding: 18px;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px;
+    background: #09160d;
     border-radius: 15px;
-
     margin-bottom: 25px;
-
-    line-height: 1.8;
 }
 
-.status span {
+.status-dot {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #ff3b30;
+}
 
+.status-dot.connected {
+    background: #35e875;
+    box-shadow: 0 0 15px #35e875;
+}
+
+#statusText {
+    color: #ddd;
+}
+
+.command {
+    text-align: center;
+    margin-bottom: 20px;
+    min-height: 30px;
+}
+
+#commandText {
+    color: #6cff8d;
+    font-size: 20px;
     font-weight: bold;
-
-    color: #54e879;
 }
-
-
-/* =========================================================
-   CONTROLS
-========================================================= */
 
 .controls {
-
     display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 15px;
-
-    max-width: 500px;
-
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    max-width: 350px;
     margin: auto;
 }
 
-.control {
-
-    min-height: 110px;
-
+.btn {
+    height: 90px;
     border: none;
-
     border-radius: 20px;
-
-    font-size: 40px;
-
-    cursor: pointer;
-
-    background:
-        rgba(255,255,255,0.12);
-
+    background: linear-gradient(145deg, #214f2e, #102718);
     color: white;
-
-    box-shadow:
-        0 8px 20px
-        rgba(0,0,0,0.3);
-
-    transition: 0.12s;
-
+    font-size: 34px;
+    cursor: pointer;
+    border: 1px solid #39734a;
+    box-shadow: 0 7px 0 #07140a;
     user-select: none;
-
     -webkit-user-select: none;
-
     touch-action: none;
+    transition: .08s;
 }
 
-.control:active {
-
-    transform: scale(0.92);
+.btn:hover {
+    background: linear-gradient(145deg, #2d6a3d, #16351f);
 }
 
-.forward {
-
-    grid-column: 2;
-}
-
-.left {
-
-    grid-column: 1;
-
-    grid-row: 2;
+.btn:active,
+.btn.pressed {
+    transform: translateY(6px);
+    box-shadow: 0 1px 0 #07140a;
+    background: #2f8a48;
 }
 
 .stop {
-
-    grid-column: 2;
-
-    grid-row: 2;
-
-    background: #c62828;
+    background: linear-gradient(145deg, #702d2d, #351313);
+    border-color: #a34a4a;
 }
 
-.right {
-
-    grid-column: 3;
-
-    grid-row: 2;
+.stop:hover {
+    background: #8d3333;
 }
 
-.backward {
-
-    grid-column: 2;
-
-    grid-row: 3;
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 17px;
+    font-weight: bold;
 }
-
-
-/* =========================================================
-   INFO
-========================================================= */
 
 .info {
-
-    margin-top: 30px;
-
-    padding: 18px;
-
+    margin-top: 25px;
+    background: #08140c;
     border-radius: 15px;
-
-    background:
-        rgba(255,255,255,0.06);
-
-    text-align: center;
-
-    color: #aaa;
-
+    padding: 15px;
+    color: #8ea396;
+    font-size: 13px;
     line-height: 1.7;
 }
 
-.logout {
-
-    margin-top: 15px;
-
-    padding: 10px 20px;
-
-    border:
-        1px solid #555;
-
-    border-radius: 10px;
-
-    background: transparent;
-
-    color: white;
-
-    cursor: pointer;
+.footer {
+    text-align: center;
+    margin-top: 18px;
+    color: #53685a;
+    font-size: 12px;
 }
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media(max-width:500px) {
-
-    .control {
-
-        min-height: 85px;
-
-        font-size: 32px;
-    }
-
-    .header h1 {
-
-        font-size: 28px;
-    }
-
-}
-
 </style>
-
 </head>
-
 
 <body>
 
-
-<!-- ========================================================
-     LOGIN
-========================================================= -->
-
-<div id="loginPage">
-
-    <div class="logo">
-        🌱🤖
-    </div>
-
-    <h1>
-        AGRI ROBO
-    </h1>
-
-    <div class="subtitle">
-        Owner Control System
-    </div>
-
-    <input
-        type="text"
-        id="username"
-        placeholder="Username"
-        autocomplete="off"
-    >
-
-    <input
-        type="password"
-        id="password"
-        placeholder="Password"
-    >
-
-    <button
-        class="loginButton"
-        onclick="login()"
-    >
-        LOGIN
-    </button>
-
-    <div id="error"></div>
-
-</div>
-
-
-<!-- ========================================================
-     CONTROL PAGE
-========================================================= -->
-
-<div id="controlPage">
+<div class="container">
 
     <div class="header">
+        <div class="logo">🌱🤖</div>
+        <h1>AGRI ROBO</h1>
+        <div class="subtitle">Smart Agricultural Rover</div>
+    </div>
 
-        <h1>
-            🌱 AGRI ROBO 🤖
-        </h1>
+    <div class="panel">
 
-        <p>
-            Smart Agricultural Rover
-        </p>
+        <div class="status">
+            <div id="statusDot" class="status-dot"></div>
+            <span id="statusText">Connecting to MQTT...</span>
+        </div>
+
+        <div class="command">
+            Command:
+            <span id="commandText">STOP</span>
+        </div>
+
+        <div class="controls">
+
+            <div></div>
+
+            <button class="btn"
+                    id="forward"
+                    data-command="forward">
+                ▲
+            </button>
+
+            <div></div>
+
+            <button class="btn"
+                    id="left"
+                    data-command="left">
+                ◀
+            </button>
+
+            <button class="btn stop"
+                    id="stop"
+                    data-command="stop">
+                ■
+            </button>
+
+            <button class="btn"
+                    id="right"
+                    data-command="right">
+                ▶
+            </button>
+
+            <div></div>
+
+            <button class="btn"
+                    id="backward"
+                    data-command="backward">
+                ▼
+            </button>
+
+            <div></div>
+
+        </div>
+
+        <div class="info">
+            <b>Controls</b><br>
+            Hold a direction button to drive.<br>
+            Release the button to automatically stop.
+        </div>
 
     </div>
 
-
-    <div class="status">
-
-        MQTT:
-        <span id="connection">
-            Disconnected
-        </span>
-
-        <br>
-
-        Command:
-        <span id="command">
-            STOP
-        </span>
-
-    </div>
-
-
-    <div class="controls">
-
-
-        <!-- FORWARD -->
-
-        <button
-            class="control forward"
-            id="forwardButton"
-        >
-            ⬆️
-        </button>
-
-
-        <!-- LEFT -->
-
-        <button
-            class="control left"
-            id="leftButton"
-        >
-            ⬅️
-        </button>
-
-
-        <!-- STOP -->
-
-        <button
-            class="control stop"
-            onclick="sendCommand('stop')"
-        >
-            🛑
-        </button>
-
-
-        <!-- RIGHT -->
-
-        <button
-            class="control right"
-            id="rightButton"
-        >
-            ➡️
-        </button>
-
-
-        <!-- BACKWARD -->
-
-        <button
-            class="control backward"
-            id="backwardButton"
-        >
-            ⬇️
-        </button>
-
-
-    </div>
-
-
-    <div class="info">
-
-        <p>
-            Hold a direction button to move.
-        </p>
-
-        <p>
-            Release it to stop.
-        </p>
-
-        <button
-            class="logout"
-            onclick="logout()"
-        >
-            LOGOUT
-        </button>
-
+    <div class="footer">
+        AGRI ROBO • MQTT CONTROL SYSTEM
     </div>
 
 </div>
-
 
 <script>
 
-/* =========================================================
-   SETTINGS
-========================================================= */
-
-/*
-    IP address of the Ubuntu computer
-    running Mosquitto.
-
-    Example:
-    10.200.40.133
-
-    CHANGE THIS if your laptop IP is different.
-*/
-
-const MQTT_BROKER_IP = "10.200.40.133";
-
-
-/*
-    Mosquitto WebSocket port
-*/
-
+const MQTT_BROKER_IP = "192.168.1.20";
 const MQTT_PORT = 9001;
-
-
-/*
-    MQTT topic
-*/
-
 const MQTT_TOPIC = "agri-robo/motor";
 
+let client = null;
+let currentCommand = "stop";
 
-/*
-    Website login
-*/
+const statusText = document.getElementById("statusText");
+const statusDot = document.getElementById("statusDot");
+const commandText = document.getElementById("commandText");
 
-const OWNER_USERNAME = "owner";
+function setStatus(text, connected) {
+    statusText.textContent = text;
 
-const OWNER_PASSWORD = "agri123";
-
-
-/* =========================================================
-   MQTT
-========================================================= */
-
-let mqttClient = null;
-
-
-/* =========================================================
-   LOGIN
-========================================================= */
-
-function login() {
-
-    const username =
-        document.getElementById("username").value;
-
-    const password =
-        document.getElementById("password").value;
-
-
-    if (
-        username === OWNER_USERNAME &&
-        password === OWNER_PASSWORD
-    ) {
-
-        document.getElementById("loginPage")
-            .style.display = "none";
-
-        document.getElementById("controlPage")
-            .style.display = "block";
-
-        document.getElementById("error")
-            .innerText = "";
-
-        connectMQTT();
-
+    if (connected) {
+        statusDot.classList.add("connected");
+    } else {
+        statusDot.classList.remove("connected");
     }
-
-    else {
-
-        document.getElementById("error")
-            .innerText =
-            "Incorrect username or password.";
-
-    }
-
 }
 
-
-/* =========================================================
-   MQTT CONNECT
-========================================================= */
-
-function connectMQTT() {
-
-    const brokerURL =
-        "ws://" +
-        MQTT_BROKER_IP +
-        ":" +
-        MQTT_PORT;
-
-
-    setConnection("Connecting...");
-
-
-    console.log(
-        "Connecting to MQTT:",
-        brokerURL
-    );
-
-
-    mqttClient = mqtt.connect(
-        brokerURL,
-        {
-
-            clientId:
-                "agri-web-" +
-                Math.random()
-                    .toString(16)
-                    .substring(2),
-
-            clean: true,
-
-            reconnectPeriod: 2000,
-
-            connectTimeout: 5000
-
-        }
-    );
-
-
-    mqttClient.on(
-        "connect",
-        function() {
-
-            console.log(
-                "MQTT connected"
-            );
-
-            setConnection(
-                "Connected"
-            );
-
-        }
-    );
-
-
-    mqttClient.on(
-        "reconnect",
-        function() {
-
-            setConnection(
-                "Reconnecting..."
-            );
-
-        }
-    );
-
-
-    mqttClient.on(
-        "error",
-        function(error) {
-
-            console.error(
-                "MQTT error:",
-                error
-            );
-
-            setConnection(
-                "Connection error"
-            );
-
-        }
-    );
-
-
-    mqttClient.on(
-        "close",
-        function() {
-
-            setConnection(
-                "Disconnected"
-            );
-
-        }
-    );
-
+function updateCommand(command) {
+    commandText.textContent = command.toUpperCase();
 }
 
+function publish(command) {
 
-/* =========================================================
-   SEND MQTT COMMAND
-========================================================= */
-
-function sendCommand(command) {
-
-    if (
-        mqttClient === null ||
-        !mqttClient.connected
-    ) {
-
-        setConnection(
-            "Not connected"
-        );
-
+    if (!client || !client.connected) {
+        console.log("MQTT not connected");
         return;
-
     }
 
-
-    mqttClient.publish(
+    client.publish(
         MQTT_TOPIC,
         command,
         {
@@ -765,274 +291,127 @@ function sendCommand(command) {
         }
     );
 
+    currentCommand = command;
+    updateCommand(command);
 
-    document.getElementById("command")
-        .innerText =
-        command.toUpperCase();
-
-
-    console.log(
-        "Command:",
-        command
-    );
-
+    console.log("COMMAND:", command);
 }
 
-
-/* =========================================================
-   CONNECTION STATUS
-========================================================= */
-
-function setConnection(text) {
-
-    document.getElementById(
-        "connection"
-    ).innerText = text;
-
+function stopRobo() {
+    publish("stop");
 }
 
+function connectMQTT() {
 
-/* =========================================================
-   HOLD-TO-MOVE
-========================================================= */
+    const url = `ws://${MQTT_BROKER_IP}:${MQTT_PORT}`;
 
-let moving = false;
+    console.log("Connecting to:", url);
 
+    client = mqtt.connect(url, {
+        clientId:
+            "agri_web_" +
+            Math.random().toString(16).substring(2),
+        reconnectPeriod: 2000,
+        connectTimeout: 5000
+    });
 
-function startMove(command) {
+    client.on("connect", function () {
 
-    if (moving) {
-        return;
+        console.log("MQTT CONNECTED");
+
+        setStatus("MQTT Connected", true);
+
+        publish("stop");
+    });
+
+    client.on("reconnect", function () {
+
+        setStatus("Reconnecting...", false);
+
+    });
+
+    client.on("offline", function () {
+
+        setStatus("MQTT Offline", false);
+
+    });
+
+    client.on("error", function (error) {
+
+        console.error("MQTT ERROR:", error);
+
+        setStatus("MQTT Error", false);
+
+    });
+
+    client.on("close", function () {
+
+        setStatus("MQTT Disconnected", false);
+
+    });
+}
+
+const buttons = document.querySelectorAll(
+    ".btn[data-command]"
+);
+
+buttons.forEach(button => {
+
+    const command = button.dataset.command;
+
+    function start() {
+
+        if (command === "stop") {
+            publish("stop");
+            return;
+        }
+
+        button.classList.add("pressed");
+
+        publish(command);
     }
 
-    moving = true;
+    function release() {
 
-    sendCommand(command);
+        button.classList.remove("pressed");
 
-}
-
-
-function stopMove() {
-
-    if (!moving) {
-        return;
+        if (command !== "stop") {
+            stopRobo();
+        }
     }
 
-    moving = false;
-
-    sendCommand("stop");
-
-}
-
-
-/* =========================================================
-   BUTTON EVENTS
-========================================================= */
-
-function setupButton(
-    id,
-    command
-) {
-
-    const button =
-        document.getElementById(id);
-
-
-    /* Mouse */
-
-    button.addEventListener(
-        "mousedown",
-        function(event) {
-
-            event.preventDefault();
-
-            startMove(command);
-
-        }
-    );
-
-
-    button.addEventListener(
-        "mouseup",
-        function(event) {
-
-            event.preventDefault();
-
-            stopMove();
-
-        }
-    );
-
-
-    button.addEventListener(
-        "mouseleave",
-        function() {
-
-            stopMove();
-
-        }
-    );
-
-
-    /* Touch */
-
-    button.addEventListener(
-        "touchstart",
-        function(event) {
-
-            event.preventDefault();
-
-            startMove(command);
-
-        },
-        {
-            passive: false
-        }
-    );
-
-
-    button.addEventListener(
-        "touchend",
-        function(event) {
-
-            event.preventDefault();
-
-            stopMove();
-
-        },
-        {
-            passive: false
-        }
-    );
-
-
-    button.addEventListener(
-        "touchcancel",
-        function(event) {
-
-            event.preventDefault();
-
-            stopMove();
-
-        },
-        {
-            passive: false
-        }
-    );
-
-}
-
-
-/* =========================================================
-   SETUP DIRECTION BUTTONS
-========================================================= */
-
-setupButton(
-    "forwardButton",
-    "forward"
-);
-
-setupButton(
-    "backwardButton",
-    "backward"
-);
-
-setupButton(
-    "leftButton",
-    "left"
-);
-
-setupButton(
-    "rightButton",
-    "right"
-);
-
-
-/* =========================================================
-   SAFETY STOP
-========================================================= */
-
-/*
-    If the browser tab loses focus,
-    stop the rover.
-*/
-
-window.addEventListener(
-    "blur",
-    function() {
-
-        stopMove();
-
-    }
-);
-
-
-/*
-    If the page is closed,
-    try to stop the rover.
-*/
-
-window.addEventListener(
-    "beforeunload",
-    function() {
-
-        try {
-
-            sendCommand("stop");
-
-        } catch (e) {}
-
-    }
-);
-
-
-/* =========================================================
-   LOGOUT
-========================================================= */
-
-function logout() {
-
-    sendCommand("stop");
-
-
-    if (mqttClient) {
-
-        mqttClient.end();
-
-        mqttClient = null;
-
+    button.addEventListener("mousedown", start);
+    button.addEventListener("mouseup", release);
+    button.addEventListener("mouseleave", release);
+
+    button.addEventListener("touchstart", function(e) {
+        e.preventDefault();
+        start();
+    }, {passive:false});
+
+    button.addEventListener("touchend", function(e) {
+        e.preventDefault();
+        release();
+    }, {passive:false});
+
+    button.addEventListener("touchcancel", release);
+});
+
+window.addEventListener("blur", function() {
+    stopRobo();
+});
+
+document.addEventListener("visibilitychange", function() {
+
+    if (document.hidden) {
+        stopRobo();
     }
 
+});
 
-    document.getElementById(
-        "controlPage"
-    ).style.display = "none";
-
-
-    document.getElementById(
-        "loginPage"
-    ).style.display = "block";
-
-
-    document.getElementById(
-        "username"
-    ).value = "";
-
-
-    document.getElementById(
-        "password"
-    ).value = "";
-
-
-    setConnection(
-        "Disconnected"
-    );
-
-}
+connectMQTT();
 
 </script>
 
-
 </body>
-
 </html>
