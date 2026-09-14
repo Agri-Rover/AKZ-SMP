@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Agri Robo | Control Panel</title>
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>AGRI ROBO | Control</title>
+
+<!-- MQTT.js -->
+<script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 
 <style>
 
@@ -15,640 +24,578 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+
     min-height: 100vh;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
     background:
-        radial-gradient(circle at top left, #164e36, transparent 40%),
-        radial-gradient(circle at bottom right, #0b3d2e, transparent 40%),
-        #06130f;
+        radial-gradient(
+            circle at top,
+            #174d2c,
+            #071b10 55%,
+            #020805
+        );
+
     color: white;
-}
 
-
-/* ================================
-   LOGIN
-================================ */
-
-#loginPage {
-    min-height: 100vh;
     display: flex;
+
     justify-content: center;
+
     align-items: center;
+
     padding: 20px;
 }
 
-.loginBox {
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+#loginPage {
+
     width: 100%;
-    max-width: 400px;
+
+    max-width: 420px;
+
     padding: 35px;
-    border-radius: 25px;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.15);
-    backdrop-filter: blur(20px);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+
     text-align: center;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.15);
+
+    border-radius: 25px;
+
+    backdrop-filter: blur(15px);
+
+    box-shadow:
+        0 20px 50px
+        rgba(0,0,0,0.5);
 }
 
 .logo {
+
     font-size: 60px;
+
     margin-bottom: 10px;
 }
 
-.loginBox h1 {
-    font-size: 30px;
+#loginPage h1 {
+
+    font-size: 32px;
+
     margin-bottom: 8px;
 }
 
-.loginBox p {
-    color: #a8c9bc;
-    margin-bottom: 25px;
+.subtitle {
+
+    color: #a8d8b5;
+
+    margin-bottom: 30px;
 }
 
 input {
+
     width: 100%;
+
     padding: 15px;
+
     margin: 8px 0;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.15);
-    background: rgba(0,0,0,0.3);
-    color: white;
-    outline: none;
-    font-size: 15px;
-}
 
-input:focus {
-    border-color: #38d996;
-}
-
-button {
     border: none;
-    cursor: pointer;
-    color: white;
-    font-weight: bold;
-}
 
-.loginButton {
-    width: 100%;
-    padding: 15px;
-    margin-top: 15px;
     border-radius: 12px;
-    background: #18a66a;
+
+    outline: none;
+
+    background:
+        rgba(255,255,255,0.12);
+
+    color: white;
+
     font-size: 16px;
 }
 
-.loginButton:hover {
-    background: #20c77e;
+input::placeholder {
+
+    color: #aaa;
 }
 
-#errorMessage {
-    color: #ff6b6b;
+.loginButton {
+
+    width: 100%;
+
     margin-top: 15px;
-    display: none;
-}
 
+    padding: 15px;
 
-/* ================================
-   MAIN APP
-================================ */
+    border: none;
 
-#app {
-    display: none;
-}
+    border-radius: 12px;
 
-header {
-    height: 75px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 5%;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    background: rgba(0,0,0,0.2);
-}
+    background: #28a745;
 
-.brand {
-    font-size: 22px;
+    color: white;
+
+    font-size: 17px;
+
     font-weight: bold;
+
+    cursor: pointer;
 }
 
-.brand span {
-    color: #36df91;
+.loginButton:hover {
+
+    background: #35c653;
 }
+
+#error {
+
+    margin-top: 15px;
+
+    color: #ff6b6b;
+
+    min-height: 20px;
+}
+
+
+/* =========================================================
+   CONTROL PAGE
+========================================================= */
+
+#controlPage {
+
+    display: none;
+
+    width: 100%;
+
+    max-width: 700px;
+}
+
+.header {
+
+    text-align: center;
+
+    margin-bottom: 20px;
+}
+
+.header h1 {
+
+    font-size: 36px;
+}
+
+.header p {
+
+    color: #a8d8b5;
+
+    margin-top: 5px;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
 
 .status {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-}
 
-.statusDot {
-    width: 10px;
-    height: 10px;
-    background: #ff4444;
-    border-radius: 50%;
-}
-
-.statusDot.online {
-    background: #30e890;
-    box-shadow: 0 0 12px #30e890;
-}
-
-
-/* ================================
-   HERO
-================================ */
-
-.hero {
     text-align: center;
-    padding: 45px 20px 25px;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    padding: 18px;
+
+    border-radius: 15px;
+
+    margin-bottom: 25px;
+
+    line-height: 1.8;
 }
 
-.hero h1 {
-    font-size: clamp(35px, 7vw, 70px);
-    margin-bottom: 10px;
-}
+.status span {
 
-.hero h1 span {
-    color: #35dc8e;
-}
+    font-weight: bold;
 
-.hero p {
-    color: #9ebdb0;
+    color: #54e879;
 }
 
 
-/* ================================
-   CONTROL PANEL
-================================ */
+/* =========================================================
+   CONTROLS
+========================================================= */
 
-.container {
-    width: 92%;
-    max-width: 1100px;
+.controls {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 15px;
+
+    max-width: 500px;
+
     margin: auto;
 }
 
-.panel {
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 25px;
-    padding: 25px;
-    margin-bottom: 25px;
-    backdrop-filter: blur(15px);
-}
+.control {
 
+    min-height: 110px;
 
-/* ================================
-   CONNECTION
-================================ */
+    border: none;
 
-.connection {
-    display: flex;
-    gap: 10px;
-}
-
-.connection input {
-    margin: 0;
-    flex: 1;
-}
-
-.connectButton {
-    padding: 0 25px;
-    border-radius: 12px;
-    background: #18a66a;
-}
-
-.connectButton:hover {
-    background: #20c77e;
-}
-
-
-/* ================================
-   ROBOT
-================================ */
-
-.robot {
-    text-align: center;
-}
-
-.robotEmoji {
-    font-size: 90px;
-    margin: 20px;
-}
-
-.robotState {
-    font-size: 20px;
-    font-weight: bold;
-    color: #38df91;
-}
-
-
-/* ================================
-   CONTROLS
-================================ */
-
-.controls {
-    display: grid;
-    grid-template-columns: repeat(3, 90px);
-    grid-template-rows: repeat(3, 90px);
-    gap: 12px;
-    justify-content: center;
-    margin-top: 25px;
-}
-
-.controlButton {
-    width: 90px;
-    height: 90px;
     border-radius: 20px;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.15);
-    font-size: 30px;
-    transition: 0.15s;
+
+    font-size: 40px;
+
+    cursor: pointer;
+
+    background:
+        rgba(255,255,255,0.12);
+
+    color: white;
+
+    box-shadow:
+        0 8px 20px
+        rgba(0,0,0,0.3);
+
+    transition: 0.12s;
+
     user-select: none;
+
     -webkit-user-select: none;
+
     touch-action: none;
 }
 
-.controlButton:hover {
-    background: rgba(35,210,130,0.3);
-}
+.control:active {
 
-.controlButton:active,
-.controlButton.active {
-    background: #18a66a;
-    transform: scale(0.94);
+    transform: scale(0.92);
 }
 
 .forward {
+
     grid-column: 2;
-    grid-row: 1;
 }
 
 .left {
+
     grid-column: 1;
+
     grid-row: 2;
 }
 
 .stop {
-    grid-column: 2;
-    grid-row: 2;
-    background: #a52828;
-}
 
-.stop:hover {
-    background: #d83232;
+    grid-column: 2;
+
+    grid-row: 2;
+
+    background: #c62828;
 }
 
 .right {
+
     grid-column: 3;
+
     grid-row: 2;
 }
 
 .backward {
+
     grid-column: 2;
+
     grid-row: 3;
 }
 
 
-/* ================================
+/* =========================================================
    INFO
-================================ */
+========================================================= */
 
 .info {
+
+    margin-top: 30px;
+
+    padding: 18px;
+
+    border-radius: 15px;
+
+    background:
+        rgba(255,255,255,0.06);
+
     text-align: center;
-    color: #91afa4;
+
+    color: #aaa;
+
     line-height: 1.7;
 }
 
 .logout {
-    display: block;
-    margin: 20px auto 0;
-    padding: 12px 25px;
+
+    margin-top: 15px;
+
+    padding: 10px 20px;
+
+    border:
+        1px solid #555;
+
     border-radius: 10px;
-    background: rgba(255,255,255,0.1);
+
+    background: transparent;
+
+    color: white;
+
+    cursor: pointer;
 }
 
-.logout:hover {
-    background: rgba(255,255,255,0.2);
-}
 
-
-/* ================================
+/* =========================================================
    MOBILE
-================================ */
+========================================================= */
 
-@media(max-width:600px) {
+@media(max-width:500px) {
 
-    header {
-        padding: 0 20px;
+    .control {
+
+        min-height: 85px;
+
+        font-size: 32px;
     }
 
-    .connection {
-        flex-direction: column;
+    .header h1 {
+
+        font-size: 28px;
     }
 
-    .connectButton {
-        padding: 14px;
-    }
-
-    .controls {
-        grid-template-columns: repeat(3, 75px);
-        grid-template-rows: repeat(3, 75px);
-    }
-
-    .controlButton {
-        width: 75px;
-        height: 75px;
-    }
 }
 
 </style>
+
 </head>
 
 
 <body>
 
 
-<!-- =========================================
-     LOGIN PAGE
-========================================= -->
+<!-- ========================================================
+     LOGIN
+========================================================= -->
 
 <div id="loginPage">
 
-    <div class="loginBox">
-
-        <div class="logo">🌱</div>
-
-        <h1>AGRI ROBO</h1>
-
-        <p>Secure Rover Control</p>
-
-        <input
-            type="text"
-            id="username"
-            placeholder="Username"
-            autocomplete="username"
-        >
-
-        <input
-            type="password"
-            id="password"
-            placeholder="Password"
-            autocomplete="current-password"
-        >
-
-        <button
-            class="loginButton"
-            onclick="login()"
-        >
-            LOGIN
-        </button>
-
-        <div id="errorMessage">
-            Invalid username or password
-        </div>
-
+    <div class="logo">
+        🌱🤖
     </div>
+
+    <h1>
+        AGRI ROBO
+    </h1>
+
+    <div class="subtitle">
+        Owner Control System
+    </div>
+
+    <input
+        type="text"
+        id="username"
+        placeholder="Username"
+        autocomplete="off"
+    >
+
+    <input
+        type="password"
+        id="password"
+        placeholder="Password"
+    >
+
+    <button
+        class="loginButton"
+        onclick="login()"
+    >
+        LOGIN
+    </button>
+
+    <div id="error"></div>
 
 </div>
 
 
+<!-- ========================================================
+     CONTROL PAGE
+========================================================= -->
 
-<!-- =========================================
-     MAIN APP
-========================================= -->
+<div id="controlPage">
 
-<div id="app">
+    <div class="header">
 
-<header>
+        <h1>
+            🌱 AGRI ROBO 🤖
+        </h1>
 
-    <div class="brand">
-        🌱 <span>AGRI ROBO</span>
+        <p>
+            Smart Agricultural Rover
+        </p>
+
     </div>
+
 
     <div class="status">
 
-        <div
-            id="statusDot"
-            class="statusDot"
-        ></div>
-
-        <span id="statusText">
+        MQTT:
+        <span id="connection">
             Disconnected
+        </span>
+
+        <br>
+
+        Command:
+        <span id="command">
+            STOP
         </span>
 
     </div>
 
-</header>
-
-
-<section class="hero">
-
-    <h1>
-        🚜 <span>AGRI ROBO</span>
-    </h1>
-
-    <p>
-        Smart Wi-Fi Agricultural Rover
-    </p>
-
-</section>
-
-
-
-<div class="container">
-
-
-<!-- =========================================
-     ESP32 CONNECTION
-========================================= -->
-
-<div class="panel">
-
-    <h2>🔌 ESP32 Connection</h2>
-
-    <br>
-
-    <div class="connection">
-
-        <input
-            id="espIP"
-            type="text"
-            placeholder="192.168.1.50"
-        >
-
-        <button
-            class="connectButton"
-            onclick="connectESP()"
-        >
-            CONNECT
-        </button>
-
-    </div>
-
-</div>
-
-
-
-<!-- =========================================
-     ROBOT STATUS
-========================================= -->
-
-<div class="panel robot">
-
-    <h2>🤖 Rover Status</h2>
-
-    <div class="robotEmoji">
-        🚜
-    </div>
-
-    <div
-        id="robotState"
-        class="robotState"
-    >
-        READY
-    </div>
-
-</div>
-
-
-
-<!-- =========================================
-     CONTROLLER
-========================================= -->
-
-<div class="panel">
-
-    <h2 style="text-align:center;">
-        🎮 Control
-    </h2>
 
     <div class="controls">
 
+
+        <!-- FORWARD -->
+
         <button
-            class="controlButton forward"
-            data-command="forward"
-            ontouchstart="startDrive('forward', event)"
-            ontouchend="stopDrive(event)"
-            ontouchcancel="stopDrive(event)"
-            onmousedown="startDrive('forward', event)"
-            onmouseup="stopDrive(event)"
-            onmouseleave="stopDrive(event)"
+            class="control forward"
+            id="forwardButton"
         >
-            ▲
+            ⬆️
         </button>
 
 
+        <!-- LEFT -->
+
         <button
-            class="controlButton left"
-            data-command="left"
-            ontouchstart="startDrive('left', event)"
-            ontouchend="stopDrive(event)"
-            ontouchcancel="stopDrive(event)"
-            onmousedown="startDrive('left', event)"
-            onmouseup="stopDrive(event)"
-            onmouseleave="stopDrive(event)"
+            class="control left"
+            id="leftButton"
         >
-            ◀
+            ⬅️
         </button>
 
 
+        <!-- STOP -->
+
         <button
-            class="controlButton stop"
-            onclick="stopRobot()"
+            class="control stop"
+            onclick="sendCommand('stop')"
         >
-            ■
+            🛑
         </button>
 
 
+        <!-- RIGHT -->
+
         <button
-            class="controlButton right"
-            data-command="right"
-            ontouchstart="startDrive('right', event)"
-            ontouchend="stopDrive(event)"
-            ontouchcancel="stopDrive(event)"
-            onmousedown="startDrive('right', event)"
-            onmouseup="stopDrive(event)"
-            onmouseleave="stopDrive(event)"
+            class="control right"
+            id="rightButton"
         >
-            ▶
+            ➡️
         </button>
 
 
+        <!-- BACKWARD -->
+
         <button
-            class="controlButton backward"
-            data-command="backward"
-            ontouchstart="startDrive('backward', event)"
-            ontouchend="stopDrive(event)"
-            ontouchcancel="stopDrive(event)"
-            onmousedown="startDrive('backward', event)"
-            onmouseup="stopDrive(event)"
-            onmouseleave="stopDrive(event)"
+            class="control backward"
+            id="backwardButton"
         >
-            ▼
+            ⬇️
+        </button>
+
+
+    </div>
+
+
+    <div class="info">
+
+        <p>
+            Hold a direction button to move.
+        </p>
+
+        <p>
+            Release it to stop.
+        </p>
+
+        <button
+            class="logout"
+            onclick="logout()"
+        >
+            LOGOUT
         </button>
 
     </div>
 
 </div>
-
-
-
-<!-- =========================================
-     INFORMATION
-========================================= -->
-
-<div class="panel info">
-
-    <h2>⌨️ Keyboard Control</h2>
-
-    <br>
-
-    <p>
-        W / ↑ &nbsp; Forward
-    </p>
-
-    <p>
-        S / ↓ &nbsp; Backward
-    </p>
-
-    <p>
-        A / ← &nbsp; Left
-    </p>
-
-    <p>
-        D / → &nbsp; Right
-    </p>
-
-    <p>
-        SPACE &nbsp; Stop
-    </p>
-
-    <button
-        class="logout"
-        onclick="logout()"
-    >
-        LOGOUT
-    </button>
-
-</div>
-
-
-</div>
-
-</div>
-
 
 
 <script>
 
+/* =========================================================
+   SETTINGS
+========================================================= */
 
-// ==========================================
-// LOGIN
-// ==========================================
+/*
+    IP address of the Ubuntu computer
+    running Mosquitto.
 
-const LOGIN_USERNAME = "admin";
-const LOGIN_PASSWORD = "agri123";
+    Example:
+    10.200.40.133
 
+    CHANGE THIS if your laptop IP is different.
+*/
+
+const MQTT_BROKER_IP = "10.200.40.133";
+
+
+/*
+    Mosquitto WebSocket port
+*/
+
+const MQTT_PORT = 9001;
+
+
+/*
+    MQTT topic
+*/
+
+const MQTT_TOPIC = "agri-robo/motor";
+
+
+/*
+    Website login
+*/
+
+const OWNER_USERNAME = "owner";
+
+const OWNER_PASSWORD = "agri123";
+
+
+/* =========================================================
+   MQTT
+========================================================= */
+
+let mqttClient = null;
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
 
 function login() {
 
@@ -660,681 +607,432 @@ function login() {
 
 
     if (
-        username === LOGIN_USERNAME &&
-        password === LOGIN_PASSWORD
+        username === OWNER_USERNAME &&
+        password === OWNER_PASSWORD
     ) {
 
-        localStorage.setItem(
-            "agriLoggedIn",
-            "true"
-        );
+        document.getElementById("loginPage")
+            .style.display = "none";
 
-        document.getElementById(
-            "loginPage"
-        ).style.display = "none";
+        document.getElementById("controlPage")
+            .style.display = "block";
 
-        document.getElementById(
-            "app"
-        ).style.display = "block";
+        document.getElementById("error")
+            .innerText = "";
+
+        connectMQTT();
 
     }
 
     else {
 
-        document.getElementById(
-            "errorMessage"
-        ).style.display = "block";
+        document.getElementById("error")
+            .innerText =
+            "Incorrect username or password.";
 
     }
 
 }
 
 
+/* =========================================================
+   MQTT CONNECT
+========================================================= */
 
-// ==========================================
-// CHECK LOGIN
-// ==========================================
+function connectMQTT() {
 
-if (
-    localStorage.getItem("agriLoggedIn")
-    === "true"
-) {
-
-    document.getElementById(
-        "loginPage"
-    ).style.display = "none";
-
-    document.getElementById(
-        "app"
-    ).style.display = "block";
-
-}
+    const brokerURL =
+        "ws://" +
+        MQTT_BROKER_IP +
+        ":" +
+        MQTT_PORT;
 
 
-
-// ==========================================
-// ESP32 IP
-// ==========================================
-
-let espIP =
-    localStorage.getItem("agriESPIP")
-    || "";
+    setConnection("Connecting...");
 
 
-document.getElementById(
-    "espIP"
-).value = espIP;
-
-
-
-// ==========================================
-// FORMAT IP
-// ==========================================
-
-function getESPURL() {
-
-    let ip =
-        document.getElementById(
-            "espIP"
-        ).value.trim();
-
-
-    if (!ip) {
-
-        alert("Enter the ESP32 IP address.");
-
-        return null;
-
-    }
-
-
-    if (!ip.startsWith("http://") &&
-        !ip.startsWith("https://")) {
-
-        ip = "http://" + ip;
-
-    }
-
-
-    return ip.replace(/\/$/, "");
-
-}
-
-
-
-// ==========================================
-// CONNECT ESP32
-// ==========================================
-
-async function connectESP() {
-
-    const url = getESPURL();
-
-    if (!url) return;
-
-
-    espIP = url;
-
-    localStorage.setItem(
-        "agriESPIP",
-        espIP
+    console.log(
+        "Connecting to MQTT:",
+        brokerURL
     );
 
 
-    setStatus(
-        "Connecting...",
-        false
+    mqttClient = mqtt.connect(
+        brokerURL,
+        {
+
+            clientId:
+                "agri-web-" +
+                Math.random()
+                    .toString(16)
+                    .substring(2),
+
+            clean: true,
+
+            reconnectPeriod: 2000,
+
+            connectTimeout: 5000
+
+        }
     );
 
 
-    try {
+    mqttClient.on(
+        "connect",
+        function() {
 
-        const response =
-            await fetch(
-                espIP + "/ping",
-                {
-                    method: "GET",
-                    cache: "no-store"
-                }
+            console.log(
+                "MQTT connected"
             );
 
-
-        if (!response.ok) {
-
-            throw new Error(
-                "HTTP " + response.status
+            setConnection(
+                "Connected"
             );
 
         }
+    );
 
 
-        const text =
-            await response.text();
+    mqttClient.on(
+        "reconnect",
+        function() {
 
-
-        if (
-            text.includes(
-                "AGRI ROBO ONLINE"
-            )
-        ) {
-
-            setStatus(
-                "ESP32 Online",
-                true
-            );
-
-            setRobotState(
-                "CONNECTED"
+            setConnection(
+                "Reconnecting..."
             );
 
         }
+    );
 
-        else {
 
-            throw new Error(
-                "Invalid ESP32 response"
+    mqttClient.on(
+        "error",
+        function(error) {
+
+            console.error(
+                "MQTT error:",
+                error
+            );
+
+            setConnection(
+                "Connection error"
             );
 
         }
+    );
 
-    }
 
-    catch(error) {
+    mqttClient.on(
+        "close",
+        function() {
 
-        console.error(error);
+            setConnection(
+                "Disconnected"
+            );
 
-        setStatus(
-            "Connection Failed",
-            false
-        );
-
-        setRobotState(
-            "ESP32 OFFLINE"
-        );
-
-        alert(
-            "Unable to connect to ESP32.\n\n" +
-            "Check:\n" +
-            "1. ESP32 is powered ON\n" +
-            "2. IP address is correct\n" +
-            "3. Computer and ESP32 use the same Wi-Fi\n" +
-            "4. Open http://ESP32-IP/ping directly"
-        );
-
-    }
+        }
+    );
 
 }
 
 
+/* =========================================================
+   SEND MQTT COMMAND
+========================================================= */
 
-// ==========================================
-// SEND COMMAND
-// ==========================================
-
-async function sendCommand(
-    command
-) {
-
-    if (!espIP) {
-
-        alert(
-            "Connect to the ESP32 first."
-        );
-
-        return false;
-
-    }
-
-
-    try {
-
-        const response =
-            await fetch(
-                espIP + "/" + command,
-                {
-                    method: "GET",
-                    cache: "no-store"
-                }
-            );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "HTTP " + response.status
-            );
-
-        }
-
-
-        const text =
-            await response.text();
-
-
-        console.log(
-            command,
-            text
-        );
-
-
-        setRobotState(
-            command.toUpperCase()
-        );
-
-
-        return true;
-
-    }
-
-    catch(error) {
-
-        console.error(
-            "Command error:",
-            error
-        );
-
-        setStatus(
-            "Connection Lost",
-            false
-        );
-
-        setRobotState(
-            "OFFLINE"
-        );
-
-        return false;
-
-    }
-
-}
-
-
-
-// ==========================================
-// DRIVE LOOP
-// ==========================================
-
-let driveInterval = null;
-let currentCommand = null;
-
-
-function startDrive(
-    command,
-    event
-) {
-
-    if (event) {
-
-        event.preventDefault();
-
-    }
-
+function sendCommand(command) {
 
     if (
-        currentCommand === command
-        && driveInterval
+        mqttClient === null ||
+        !mqttClient.connected
     ) {
+
+        setConnection(
+            "Not connected"
+        );
 
         return;
 
     }
 
 
-    currentCommand = command;
-
-
-    const button =
-        document.querySelector(
-            `[data-command="${command}"]`
-        );
-
-
-    if (button) {
-
-        button.classList.add(
-            "active"
-        );
-
-    }
-
-
-    sendCommand(command);
-
-
-    driveInterval =
-        setInterval(
-            function() {
-
-                sendCommand(
-                    command
-                );
-
-            },
-            300
-        );
-
-}
-
-
-
-function stopDrive(event) {
-
-    if (event) {
-
-        event.preventDefault();
-
-    }
-
-
-    if (driveInterval) {
-
-        clearInterval(
-            driveInterval
-        );
-
-        driveInterval = null;
-
-    }
-
-
-    if (currentCommand) {
-
-        const button =
-            document.querySelector(
-                `[data-command="${currentCommand}"]`
-            );
-
-
-        if (button) {
-
-            button.classList.remove(
-                "active"
-            );
-
-        }
-
-    }
-
-
-    currentCommand = null;
-
-
-    sendCommand("stop");
-
-}
-
-
-
-// ==========================================
-// STOP BUTTON
-// ==========================================
-
-function stopRobot() {
-
-    if (driveInterval) {
-
-        clearInterval(
-            driveInterval
-        );
-
-        driveInterval = null;
-
-    }
-
-
-    document.querySelectorAll(
-        ".controlButton"
-    ).forEach(
-        button => {
-            button.classList.remove(
-                "active"
-            );
+    mqttClient.publish(
+        MQTT_TOPIC,
+        command,
+        {
+            qos: 0,
+            retain: false
         }
     );
 
 
-    currentCommand = null;
+    document.getElementById("command")
+        .innerText =
+        command.toUpperCase();
 
+
+    console.log(
+        "Command:",
+        command
+    );
+
+}
+
+
+/* =========================================================
+   CONNECTION STATUS
+========================================================= */
+
+function setConnection(text) {
+
+    document.getElementById(
+        "connection"
+    ).innerText = text;
+
+}
+
+
+/* =========================================================
+   HOLD-TO-MOVE
+========================================================= */
+
+let moving = false;
+
+
+function startMove(command) {
+
+    if (moving) {
+        return;
+    }
+
+    moving = true;
+
+    sendCommand(command);
+
+}
+
+
+function stopMove() {
+
+    if (!moving) {
+        return;
+    }
+
+    moving = false;
 
     sendCommand("stop");
 
 }
 
 
+/* =========================================================
+   BUTTON EVENTS
+========================================================= */
 
-// ==========================================
-// KEYBOARD CONTROL
-// ==========================================
-
-const keys = {
-
-    "w": "forward",
-    "ArrowUp": "forward",
-
-    "s": "backward",
-    "ArrowDown": "backward",
-
-    "a": "left",
-    "ArrowLeft": "left",
-
-    "d": "right",
-    "ArrowRight": "right"
-
-};
-
-
-document.addEventListener(
-    "keydown",
-    function(event) {
-
-        if (
-            event.target.tagName ===
-            "INPUT"
-        ) {
-
-            return;
-
-        }
-
-
-        if (
-            event.code ===
-            "Space"
-        ) {
-
-            event.preventDefault();
-
-            stopRobot();
-
-            return;
-
-        }
-
-
-        const command =
-            keys[event.key];
-
-
-        if (command) {
-
-            event.preventDefault();
-
-            startDrive(
-                command,
-                event
-            );
-
-        }
-
-    }
-);
-
-
-
-document.addEventListener(
-    "keyup",
-    function(event) {
-
-        const command =
-            keys[event.key];
-
-
-        if (command) {
-
-            event.preventDefault();
-
-            stopDrive(event);
-
-        }
-
-    }
-);
-
-
-
-// ==========================================
-// STATUS
-// ==========================================
-
-function setStatus(
-    text,
-    online
+function setupButton(
+    id,
+    command
 ) {
 
-    document.getElementById(
-        "statusText"
-    ).textContent = text;
+    const button =
+        document.getElementById(id);
 
 
-    const dot =
-        document.getElementById(
-            "statusDot"
-        );
+    /* Mouse */
+
+    button.addEventListener(
+        "mousedown",
+        function(event) {
+
+            event.preventDefault();
+
+            startMove(command);
+
+        }
+    );
 
 
-    if (online) {
+    button.addEventListener(
+        "mouseup",
+        function(event) {
 
-        dot.classList.add(
-            "online"
-        );
+            event.preventDefault();
 
-    }
+            stopMove();
 
-    else {
+        }
+    );
 
-        dot.classList.remove(
-            "online"
-        );
 
-    }
+    button.addEventListener(
+        "mouseleave",
+        function() {
+
+            stopMove();
+
+        }
+    );
+
+
+    /* Touch */
+
+    button.addEventListener(
+        "touchstart",
+        function(event) {
+
+            event.preventDefault();
+
+            startMove(command);
+
+        },
+        {
+            passive: false
+        }
+    );
+
+
+    button.addEventListener(
+        "touchend",
+        function(event) {
+
+            event.preventDefault();
+
+            stopMove();
+
+        },
+        {
+            passive: false
+        }
+    );
+
+
+    button.addEventListener(
+        "touchcancel",
+        function(event) {
+
+            event.preventDefault();
+
+            stopMove();
+
+        },
+        {
+            passive: false
+        }
+    );
 
 }
 
 
+/* =========================================================
+   SETUP DIRECTION BUTTONS
+========================================================= */
 
-function setRobotState(
-    text
-) {
+setupButton(
+    "forwardButton",
+    "forward"
+);
 
-    document.getElementById(
-        "robotState"
-    ).textContent = text;
+setupButton(
+    "backwardButton",
+    "backward"
+);
 
-}
+setupButton(
+    "leftButton",
+    "left"
+);
+
+setupButton(
+    "rightButton",
+    "right"
+);
 
 
+/* =========================================================
+   SAFETY STOP
+========================================================= */
 
-// ==========================================
-// SAFETY STOP
-// ==========================================
+/*
+    If the browser tab loses focus,
+    stop the rover.
+*/
 
 window.addEventListener(
     "blur",
     function() {
 
-        stopRobot();
+        stopMove();
 
     }
 );
 
 
-document.addEventListener(
-    "visibilitychange",
-    function() {
-
-        if (
-            document.hidden
-        ) {
-
-            stopRobot();
-
-        }
-
-    }
-);
-
+/*
+    If the page is closed,
+    try to stop the rover.
+*/
 
 window.addEventListener(
     "beforeunload",
     function() {
 
-        if (espIP) {
+        try {
 
-            fetch(
-                espIP + "/stop",
-                {
-                    method: "GET",
-                    keepalive: true
-                }
-            ).catch(
-                () => {}
-            );
+            sendCommand("stop");
 
-        }
+        } catch (e) {}
 
     }
 );
 
 
-// ==========================================
-// ENTER KEY LOGIN
-// ==========================================
-
-document.getElementById(
-    "password"
-).addEventListener(
-    "keydown",
-    function(event) {
-
-        if (
-            event.key === "Enter"
-        ) {
-
-            login();
-
-        }
-
-    }
-);
-
-
-// ==========================================
-// LOGOUT
-// ==========================================
+/* =========================================================
+   LOGOUT
+========================================================= */
 
 function logout() {
 
-    stopRobot();
+    sendCommand("stop");
 
-    localStorage.removeItem(
-        "agriLoggedIn"
+
+    if (mqttClient) {
+
+        mqttClient.end();
+
+        mqttClient = null;
+
+    }
+
+
+    document.getElementById(
+        "controlPage"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "loginPage"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "username"
+    ).value = "";
+
+
+    document.getElementById(
+        "password"
+    ).value = "";
+
+
+    setConnection(
+        "Disconnected"
     );
-
-    location.reload();
 
 }
 
 </script>
 
+
 </body>
+
 </html>
